@@ -5,11 +5,13 @@ import Home from './pages/Home'
 import NoPage from './pages/Nopage'
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import Navbar from './components/Navbar';
 
 function App() {
 
   return (
     <div>
+      <Navbar />
        <BrowserRouter>
       <Routes>
           <Route path='/' element={<Home />} />

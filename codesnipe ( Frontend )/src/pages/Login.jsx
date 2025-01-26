@@ -2,7 +2,6 @@ import React from 'react'
 import cartoon from '../assets/chillguy.png'
 import logo from '../assets/codes.gif'
 import { Link } from 'react-router-dom'
-import Navbar from './Navbar'
 import { useState } from 'react'
 
 const Login = () => {
@@ -17,7 +16,6 @@ const Login = () => {
 
     return (
         <div className='w-full h-screen bg-black '>
-            <Navbar/>
             <div className='w-full h-full flex md:flex-row flex-col justify-center items-center '>
                 <form onSubmit={handleSubmit} className='w-full h-full flex flex-col justify-center items-center md:gap-8 gap-4 mb-[10rem] '>
                
