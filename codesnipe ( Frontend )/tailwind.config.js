@@ -5,7 +5,16 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'], // Add Poppins
+        heading: ['Oswald', 'sans-serif'], // Add Oswald
+        body: ['Nunito', 'sans-serif'], // Add Nunito
+        kanit: ['Kanit', 'sans-serif'], // Add Kanit
+        montserrat: ['Montserrat', 'sans-serif'], // Add Montserrat
+        openSans: ['Open Sans', 'sans-serif'], // Add Open Sans
+      },
+    },
   },
   plugins: [],
 }
