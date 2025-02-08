@@ -33,7 +33,7 @@ const Login = () => {
                         <div className='relative '>
                         <div className='flex md:w-[30rem] w-full h-fit items-center justify-center '>
                             <div className='w-full h-14 bg-sky-400 rounded-lg text-white'></div>
-                            <button type='submit' className='absolute md:w-[23rem] w-[10rem] h-14 bg-sky-400 rounded-lg text-white z-40'>Sign Up</button>
+                            <button type='submit' className='absolute md:w-[23rem] w-[10rem] h-14 bg-sky-400 rounded-lg text-white z-40'>Sign In</button>
                         </div>
                     </div>
                     <div className='md:block hidden w-[40rem] h-[30rem] absolute overflow-hidden left-[11rem] z-20 -top-[13.9rem]'>

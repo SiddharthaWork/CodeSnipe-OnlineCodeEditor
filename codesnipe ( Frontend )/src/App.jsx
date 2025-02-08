@@ -10,16 +10,21 @@ function App() {
 
   return (
     <div>
-       <BrowserRouter>
-      <Navbar />
-      {/* Routes */}
-      <Routes>
+      <BrowserRouter>
+      <header className='fixed right-0 top-0 w-full h-fit z-50 mb-10' >
+        <Navbar />
+        </header>
+        {/* Routes */}
+        <main className='w-full h-full overflow-hidden mt-28'>          
+        <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/signup' element={<SignUp />} />
-          <Route path='/login' element={<Login/>} />
+          <Route path='/login' element={<Login />} />
           <Route path="*" element={<NoPage />} />
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+        </main>
+
+      </BrowserRouter>
     </div>
   )
 }
