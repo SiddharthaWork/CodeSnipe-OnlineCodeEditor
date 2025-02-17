@@ -10,6 +10,7 @@ const Home = () => {
           {/* <h1 className='font-body text-sm text-black'>Search Your Code File</h1> */}
           
           <div className='w-full flex gap-2 items-center justify-center'>
+            {/* Added Icon */}
             <Icon icon="mingcute:search-3-line" width="24" height="24" color='black' />
           <input type="text" className="w-full h-full outline-none border-none text-black " placeholder='Enter Your Code File Name'/>
           </div>
