@@ -14,7 +14,6 @@ function App() {
       <header className='fixed right-0 top-0 w-full h-fit z-50 mb-10' >
         <Navbar />
         </header>
-        {/* Routes */}
         <main className='w-full h-full overflow-hidden mt-28'>          
         <Routes>
           <Route path='/' element={<Home />} />
