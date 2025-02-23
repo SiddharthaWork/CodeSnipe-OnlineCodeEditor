@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Card = () => {
+const ListCard = () => {
   return (
     <div className='w-[20rem] h-[30rem] bg-white border shadow-sm'>
         <div className='flex flex-col gap-2'>
@@ -10,4 +10,4 @@ const Card = () => {
   )
 }
 
-export default Card
+export default ListCard
