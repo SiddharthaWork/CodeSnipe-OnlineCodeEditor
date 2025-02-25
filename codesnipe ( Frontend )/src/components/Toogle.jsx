@@ -5,5 +5,4 @@ const Toogle = () => {
     <div>Toogle</div>
   )
 }
-
 export default Toogle
