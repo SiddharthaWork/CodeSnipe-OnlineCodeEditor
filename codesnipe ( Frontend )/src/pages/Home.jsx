@@ -24,7 +24,7 @@ const Home = () => {
         </div>
 
       </div>
-      <div className='w-full h-full'>
+      <div className='w-full h-full p-16'>
         {
           layout ?
             (
