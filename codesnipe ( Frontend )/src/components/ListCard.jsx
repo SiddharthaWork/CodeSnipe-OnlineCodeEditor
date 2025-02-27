@@ -1,30 +1,45 @@
+import { Icon } from '@iconify/react/dist/iconify.js'
 import React from 'react'
-import { Avatar } from '@mui/material';
+
+const list = [
+  {
+    img: 'https://randomuser.me/api/portraits/women/20.jpg',
+    title: 'My First Project',
+    des: 'This is a Clean Ui',
+    userprofile: 'https://randomuser.me/api/portraits/women/20.jpg'
+  },
+  {
+    img: 'https://randomuser.me/api/portraits/women/20.jpg',
+    title: 'My First Project',
+    des: 'This is a Clean Ui',
+    userprofile: 'https://randomuser.me/api/portraits/women/20.jpg'
+  }
+]
 
 const ListCard = () => {
-  let a = 10;
   return (
-    <div className='relative w-[26rem] h-[16rem] z-0 group'>
-    <div className='w-[24rem] h-[15rem] rounded-lg z-40 shadow-sm  flex flex-col gap-2'>
+    <div className='w-full flex justify-center'>
+      <div className='w-full grid-cols-1 space-y-10 place-items-center h-full'>
+        {list.map((item,index) => (
+           <div className='w-[46rem] h-[8rem] flex justify-between bg-black rounded-xl p-10 border-sky-600 border-l-4 border-r-4 border-t-2 shadow-md shadow-white'>
+           <div className='flex gap-4 items-center'>
+             <img src={item.userprofile} alt="" className='w-16 h-16 rounded-full object-cover' />
+             <div className='flex flex-col gap-2'>
+             <h1 className='text-white font-kanit text-xl'>
+               {item.title}
+             </h1>
+             <p>{item.des}</p>
+             </div>
+           </div>
      
-      <div className='w-full h-[80%]'>
-        <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg" alt="" className='w-full h-full object-cover' />
-      </div>
-      <div className='w-full h-[20%] py-2 flex gap-2 items-center'>
-        <Avatar alt="Remy Sharp" sx={{ borderRadius: "0%" }}  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi6rSH-A48Rg-kaRwlL7p8kFcQn6SxsxBcog&s" />
-
-        <h1 className='font-kanit flex flex-col'>
-          <span className='text-white text-lg'>Line Art Mixed</span>
-          <span className='text-white text-sm'>Crazy Code</span>
-        </h1>
-
-      </div>
-
-    </div>
-    <div className='absolute 
-    w-[24rem] h-[14.5rem] group-hover:w-[26rem] group-hover:h-[18rem] group-hover:-top-3 group-hover:-left-4
-    group-hover:shadow-md group-hover:shadow-sky-400 
-    top-6 left-4 bg-[#050a1f] -z-10 rounded-lg transition-all duration-300 ease-in-out '>
+           <div className='flex h-full items-center'>
+             <Icon icon="ep:delete-filled" width="24" height="24" color='red' />
+           </div>
+     
+     
+         </div>
+        ))}
+   
     </div>
     </div>
   )

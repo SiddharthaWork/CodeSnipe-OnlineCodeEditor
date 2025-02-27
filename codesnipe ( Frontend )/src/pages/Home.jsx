@@ -4,7 +4,7 @@ import { useState } from 'react';
 import GridCard from '../components/GridCard';
 import ListCard  from '../components/ListCard';
 const Home = () => {
-  const [layout, setLayout] = useState(false);
+  const [layout, setLayout] = useState(true);
   return (
     <div className='w-full h-full'>
       <div className='flex flex-col justify-center items-center gap-6'>
