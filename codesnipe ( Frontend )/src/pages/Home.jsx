@@ -17,6 +17,10 @@ const Home = () => {
             <Icon icon="mingcute:search-3-line" width="24" height="24" color='black' />
             <input type="text" className="w-full h-full outline-none border-none text-black " placeholder='Enter Your Code File Name' />
             {/* <Icon icon="mingcute:search-3-line" width="24" height="24" color='black' />  */}
+            {/* <Icon icon="mingcute:search-3-line" width="24" height="24" color='black' />  */}
+            {/* <Icon icon="mingcute:search-3-line" width="24" height="24" color='black' />  */}
+            {/* <Icon icon="mingcute:search-3-line" width="24" height="24" color='black' />  */}
+            {/* <Icon icon="mingcute:search-3-line" width="24" height="24" color='black' />  */}
           </div>
 
         </div>
