@@ -19,9 +19,9 @@ const list = [
 const ListCard = () => {
   return (
     <div className='w-full flex justify-center'>
-      <div className='w-full grid-cols-1 space-y-10 place-items-center h-full'>
+      <div className='w-full grid-cols-1 space-y-16 place-items-center h-full'>
         {list.map((item,index) => (
-           <div className='w-[46rem] h-[8rem] flex justify-between bg-black rounded-xl p-10 border-sky-600 border-l-4 border-r-4 border-t-2 shadow-md shadow-white'>
+           <div className='w-[46rem] h-[8rem] flex justify-between bg-black rounded-full p-10 border-sky-600 border-l-4 border-r-4 border-t-2 '>
            <div className='flex gap-4 items-center'>
              <img src={item.userprofile} alt="" className='w-16 h-16 rounded-full object-cover' />
              <div className='flex flex-col gap-2'>

@@ -48,7 +48,6 @@ const list = [
 ];
 
 const GridCard = () => {
-  let a = 10;
   return (
     <div className='grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 w-full h-full gap-16 justify-center place-items-center'>
       {list.map((item,index) => (
@@ -79,7 +78,7 @@ const GridCard = () => {
          <div className='absolute 
          w-[24rem] h-[14.5rem] group-hover:w-[26rem] group-hover:h-[18rem] group-hover:-top-3 group-hover:-left-4
          group-hover:shadow-md group-hover:shadow-sky-400 
-         top-6 left-4 bg-[#050a1f]/50 -z-10 rounded-lg transition-all duration-300 ease-in-out '>
+         top-6 left-4 bg-[#050a1f]/80 -z-10 rounded-lg transition-all duration-300 ease-in-out '>
          </div>
          </div>
       ))}

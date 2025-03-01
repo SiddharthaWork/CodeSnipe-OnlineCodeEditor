@@ -19,9 +19,13 @@ const Home = () => {
             {/* <Icon icon="mingcute:search-3-line" width="24" height="24" color='black' />  */}
           </div>
 
-          
-
         </div>
+
+      </div>
+
+      <div className='w-[6rem] h-full flex justify-center gap-2 items-center  bg-[#050a1f] mx-20 mt-6 p-2 rounded-full hover:ring-2 hover:ring-sky-600/50'>
+      <Icon icon="material-symbols:view-list-rounded" width="30" height="30" color='white' onClick={() => setLayout(!layout)} />
+      <Icon icon="si:grid-view-fill" width="30" height="30" color='white' onClick={() => setLayout(!layout)} />
 
       </div>
       <div className='w-full h-full p-16'>
