@@ -20,7 +20,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/editor' element={<Editor />} />
+          <Route path='/editor/:projectid' element={<Editor />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
         </main>
