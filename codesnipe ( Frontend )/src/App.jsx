@@ -12,10 +12,10 @@ function App() {
   return (
     <div>
       <BrowserRouter>
-      <header className='fixed right-0 top-0 w-full h-fit z-50 mb-10' >
+      <header className='fixed right-0 top-0 w-full h-fit z-50' >
         <Navbar />
         </header>
-        <main className='w-full h-full overflow-hidden mt-28'>          
+        <main className='w-full h-full overflow-hidden mt-20'>          
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/signup' element={<SignUp />} />

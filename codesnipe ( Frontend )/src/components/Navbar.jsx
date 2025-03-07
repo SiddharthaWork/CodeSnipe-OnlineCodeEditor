@@ -19,6 +19,7 @@ const Navbar = () => {
           <Link to='/' className='font-kanit tracking-wide'>About</Link>
           <Link to='/' className='font-kanit tracking-wide'>Contact</Link>
           <Link to='/' className='font-kanit tracking-wide'>Services</Link>  
+          <Link to='/editor/1projectid' className='font-kanit tracking-wide'>Editor</Link>  
           <Link to='/login' className='font-kanit tracking-wide'>Sign In</Link>  
           <Avatar alt="Remy Sharp" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi6rSH-A48Rg-kaRwlL7p8kFcQn6SxsxBcog&s"
           onClick={() => showProfile(!profile)}
