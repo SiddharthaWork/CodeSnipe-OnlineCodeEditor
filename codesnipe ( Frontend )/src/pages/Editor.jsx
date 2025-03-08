@@ -1,11 +1,14 @@
 import React from 'react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Editor } from '@monaco-editor/react'
+import { useState } from 'react'
 
 const EditorPage = () => {
+  const [expand, setExpand] = useState(false);
+
   return (
     <div className='w-full h-screen bg-black'>
-      <div className='w-full h-1/2 px-4 '>
+      <div className={`${expand ? 'w-full h-full transition-all duration-300 ease-in-out' : 'w-full h-1/2'}`}>
         <div className='w-full h-full grid grid-cols-3 gap-4' >
           {/* HTML */}
           <div className='bg-black p-2 flex-col overflow-hidden'>
@@ -96,9 +99,10 @@ const EditorPage = () => {
 
       </div>
 
-      <iframe className='w-full h-1/2 bg-white'>
+      <iframe className={`${expand ? 'hidden' : 'w-full h-1/2 bg-white' }`}>
        
-       {/* here are some changes that need to be made */}
+       {/* here are some changes that need to be made */}y
+       
 
       </iframe>
 
