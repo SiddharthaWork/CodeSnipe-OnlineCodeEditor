@@ -9,7 +9,7 @@ const Navbar = () => {
 
   const ref = useOutsideClick(() => showProfile(false));
   return (
-    <div className='fixed w-full h-fit mt-2 z-50' ref={ref}>
+    <div className='fixed w-full h-fit pt-2 z-50 bg-black' ref={ref}>
       <div className='w-full h-16 bg-sky-300/0 flex justify-between items-center px-8 py-2'>
         <div className='flex w-[10rem] h-16 '>
           <img src="/codesnipe.gif" alt="Logo" className='w-full h-full object-cover' />

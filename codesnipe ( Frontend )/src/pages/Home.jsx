@@ -3,8 +3,10 @@ import React from 'react'
 import { useState } from 'react';
 import GridCard from '../components/GridCard';
 import ListCard  from '../components/ListCard';
+import { use } from 'react';
 const Home = () => {
-  const [layout, setLayout] = useState(true);
+  const [layout, setLayout] = useState("gridview");
+    
   return (
     <div className='w-full h-full'>
       <div className='flex flex-col justify-center items-center gap-6'>
@@ -22,23 +24,19 @@ const Home = () => {
 
       </div>
 
-      <div className='w-[6rem] h-full flex justify-center gap-2 items-center  bg-[#050a1f] mx-20 mt-6 p-2 rounded-full hover:ring-2 hover:ring-sky-600/50'>
-      <Icon icon="material-symbols:view-list-rounded" width="30" height="30" color='white' onClick={() => setLayout(!layout)} />
-      <Icon icon="si:grid-view-fill" width="30" height="30" color='white' onClick={() => setLayout(!layout)} />
+      <div className='w-[6rem] h-full flex justify-center gap-2 items-center  bg-[#050a1f] mx-20 mt-6 p-2 rounded-full hover:ring-2 hover:ring-sky-600/50 cursor-pointer'>
+      <Icon icon="material-symbols:view-list-rounded" width="30" height="30" color='white' onClick={() => setLayout("listview")} />
+      <Icon icon="si:grid-view-fill" width="30" height="30" color='white' onClick={() => setLayout("gridview")} />
 
       </div>
       <div className='w-full h-full p-16'>
         {
-          layout ?
-            (
-              <>
+          layout === "gridview" &&
               <GridCard />
-              </>
-            ) : (
-              <>
+        }
+        {
+          layout === "listview" &&
               <ListCard />
-              </>
-            )
         }
       </div>
 
