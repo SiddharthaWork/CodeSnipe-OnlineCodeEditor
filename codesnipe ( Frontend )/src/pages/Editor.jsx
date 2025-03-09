@@ -33,6 +33,7 @@ const EditorPage = () => {
                   scrollBeyondLastLine: false,
                   automaticLayout: true,
                 }}
+                onChange={(e) => console.log(e)}
               />
             </div>
           </div>
@@ -102,7 +103,9 @@ const EditorPage = () => {
       <iframe className={`${expand ? 'hidden' : 'w-full h-1/2 bg-white' }`}>
        
        {/* here are some changes that need to be made */}y
-       
+
+
+
 
       </iframe>
 
