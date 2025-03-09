@@ -21,11 +21,8 @@ const Navbar = () => {
           <Link to='/' className='font-kanit tracking-wide'>Services</Link>  
           <Link to='/editor/1projectid' className='font-kanit tracking-wide'>Editor</Link>  
           <Link to='/login' className='font-kanit tracking-wide'>Sign In</Link>  
-          <Avatar alt="Remy Sharp" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi6rSH-A48Rg-kaRwlL7p8kFcQn6SxsxBcog&s"
-          onClick={() => showProfile(!profile)}
-          />
           {profile && (
-            <div className="absolute top-16 right-4 bg-white shadow-lg rounded-md p-2">
+            <div className="absolute top-16 right-4 bg-white shadow-lg rounded-md p-2 mt-1">
               <ul className='text-[16px] -space-y-2'>
                 <li className="py-2 px-4 text-black hover:bg-gray-100 cursor-pointer">Profile</li>
                 <li className="py-2 px-4 text-black hover:bg-gray-100 cursor-pointer">Settings</li>
@@ -33,7 +30,10 @@ const Navbar = () => {
               </ul>
             </div>
           )}
-        </div>
+          <div className='w-12 h-12 rounded-full overflow-hidden cursor-pointer' onClick={() => showProfile(!profile)}>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi6rSH-A48Rg-kaRwlL7p8kFcQn6SxsxBcog&s" alt="" className='w-full h-full object-cover' />
+          </div>
+      </div>
       </div>
     </div>
   )
