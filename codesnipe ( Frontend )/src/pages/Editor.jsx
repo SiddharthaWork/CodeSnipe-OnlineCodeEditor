@@ -6,6 +6,7 @@ import { useState } from 'react'
 const EditorPage = () => {
   const [expand, setExpand] = useState(false);
 
+
   return (
     <div className='w-full h-screen bg-black'>
       <div className={`${expand ? 'w-full h-full transition-all duration-300 ease-in-out' : 'w-full h-1/2'}`}>
@@ -68,7 +69,7 @@ const EditorPage = () => {
 
           {/* JS */}
 
-          <div className='bg-black p-2 flex-col  overflow-hidden'>
+          <div className='relative bg-black p-2 flex-col  overflow-hidden'>
             <div className='bg-[#1d1e22] p-2 w-fit h-fit border-t-2 border-white/50 flex gap-1 items-center'>
               <Icon icon="vscode-icons:file-type-js" width="24" height="24" />
               <h1 className='font-kanit text-2xl'>
@@ -92,6 +93,12 @@ const EditorPage = () => {
                 }}
               />
             </div>
+            <div className='absolute top-2 right-9 clear-start cursor-pointer transition-all duration-300 ease-in-out' onClick={() => setExpand(!expand)}>
+              {expand ?
+                <Icon icon="icon-park-outline:expand-up" width="32" height="32" color='white' onClick={() => setExpand(!expand)} /> :
+                <Icon icon="icon-park-outline:expand-down" width="32" height="32" color='white' onClick={() => setExpand(!expand)} />
+                }
+            </div>
           </div>
 
 
@@ -100,7 +107,7 @@ const EditorPage = () => {
 
       </div>
 
-      <iframe className={`${expand ? 'hidden' : 'w-full h-1/2 bg-white' }`}>
+      <iframe className={`${expand ? 'hidden transition-all duration-300 ease-in-out' : 'w-full h-1/2 bg-white transition-all duration-300 ease-in-out'}`}>
        
        {/* here are some changes that need to be made */}y
 
