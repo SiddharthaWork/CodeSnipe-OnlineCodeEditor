@@ -41,6 +41,7 @@ const Login = () => {
 
                     </div>
                     </div>
+                    {/* Will be hidden in md */}
 
 
                     <div className='md:hidden w-[16rem] h-[16rem] overflow-hidden '>
