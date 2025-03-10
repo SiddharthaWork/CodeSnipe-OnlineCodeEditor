@@ -1,10 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import useOutsideClick from '../hooks/useOutsideClick';
 
 const Navbar = () => {
   const[profile,showProfile] = useState(false);
+  const showProfiles = useCallback((value) => showProfile(value), []);
+  showProfiles(true);
 
   const ref = useOutsideClick(() => showProfile(false));
   return (
@@ -20,6 +22,7 @@ const Navbar = () => {
           <Link to='/' className='font-kanit tracking-wide'>Services</Link>  
           <Link to='/editor/1projectid' className='font-kanit tracking-wide'>Editor</Link>  
           <Link to='/login' className='font-kanit tracking-wide'>Sign In</Link>  
+          {/* So here is the little changes in the code base */}
           {profile && (
             <div className="absolute top-16 right-4 bg-white shadow-lg rounded-md p-2 mt-1">
               <ul className='text-[16px] -space-y-2'>
