@@ -32,6 +32,7 @@ const Navbar = () => {
               </ul>
             </div>
           )}
+          {/* Changes in the User Profile Section */}
           <div className='w-12 h-12 rounded-full overflow-hidden cursor-pointer' onClick={() => showProfile(!profile)}>
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi6rSH-A48Rg-kaRwlL7p8kFcQn6SxsxBcog&s" alt="" className='w-full h-full object-cover' />
           </div>
