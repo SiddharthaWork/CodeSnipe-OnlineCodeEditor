@@ -5,8 +5,6 @@ import useOutsideClick from '../hooks/useOutsideClick';
 
 const Navbar = () => {
   const[profile,showProfile] = useState(false);
-  const showProfiles = useCallback((value) => showProfile(value), []);
-  showProfiles(true);
 
   const ref = useOutsideClick(() => showProfile(false));
   return (
