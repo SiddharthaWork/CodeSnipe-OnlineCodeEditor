@@ -29,7 +29,7 @@ const EditorPage = () => {
     
     timeoutRef.current = setTimeout(() => {
       execute();
-    }); // 500ms debounce time
+    }), 100; // 500ms debounce time
   }
 
   // Handle code changes with the debounced function
@@ -52,8 +52,13 @@ const EditorPage = () => {
   }, []);
 
   return (
-    <div className='w-full h-screen bg-black'>
-      <div className={`${expand ? 'w-full h-full transition-all duration-300 ease-in-out' : 'w-full h-1/2'}`}>
+    <div className='w-full h-screen bg-black flex flex-col overflow-hidden'>
+      {/* Editor Section */}
+      <div 
+        className={`transition-all duration-300 ease-in-out ${
+          expand ? 'h-full' : 'h-1/2'
+        }`}
+      >
         <div className='w-full h-full grid grid-cols-3 gap-4' >
           {/* HTML */}
           <div className='bg-black p-2 flex-col overflow-hidden'>
@@ -147,14 +152,21 @@ const EditorPage = () => {
         </div>
       </div>
 
-      <iframe 
-        id='iframe' 
-        className={`${expand ? 'hidden transition-all duration-300 ease-in-out' : 'w-full h-1/2 bg-white transition-all duration-300 ease-in-out'}`}
-        title="Preview"
-        sandbox="allow-scripts"
-      />
+      {/* Preview Section */}
+      <div 
+        className={`transition-all duration-300 ease-in-out ${
+          expand ? 'h-0' : 'h-1/2'
+        }`}
+      >
+        <iframe 
+          id='iframe' 
+          className={`w-full h-full bg-white`}
+          title="Preview"
+          sandbox="allow-scripts"
+        />
+      </div>
     </div>
   )
 }
-
+// Merge with main
 export default EditorPage
