@@ -8,16 +8,14 @@ const Navbar = () => {
 
   const ref = useOutsideClick(() => showProfile(false));
   return (
-    <div className='fixed w-full h-fit pt-2 z-50 bg-black' ref={ref}>
+    <div className='fixed w-full h-fit pt-2 z-50 backdrop-blur-sm bg-black/80 ' ref={ref}>
       <div className='w-full h-16 bg-sky-300/0 flex justify-between items-center px-8 py-2'>
         <div className='flex w-[10rem] h-16 '>
           <img src="/codesnipe.gif" alt="Logo" className='w-full h-full object-cover' />
         </div>
         <div className='link w-fit h-full text-xl font-bold flex justify-center items-center space-x-8'>
           <Link to='/' className='font-kanit'>Home</Link>
-          <Link to='/' className='font-kanit tracking-wide'>About</Link>
-          <Link to='/' className='font-kanit tracking-wide'>Contact</Link>
-          <Link to='/' className='font-kanit tracking-wide'>Services</Link>  
+          <Link to='/code' className='font-kanit tracking-wide'>Code</Link>  
           <Link to='/editor/1projectid' className='font-kanit tracking-wide'>Editor</Link>  
           <Link to='/login' className='font-kanit tracking-wide'>Sign In</Link>  
           {/* So here is the little changes in the code base */}

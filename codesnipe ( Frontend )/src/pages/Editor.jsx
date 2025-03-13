@@ -165,7 +165,6 @@ const EditorPage = () => {
           sandbox="allow-scripts"
         />
 
-        {/* here are some changes in the editor components */}
       </div>
     </div>
   )

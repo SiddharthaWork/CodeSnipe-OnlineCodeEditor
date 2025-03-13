@@ -50,7 +50,7 @@ const GridCard = () => {
   return (
     <div className='grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 w-full h-full gap-16 justify-center place-items-center'>
       {list.map((item, index) => (
-        <div className='relative w-[26rem] h-[16rem] z-0 group'>
+        <div key={index} className='relative w-[26rem] h-[16rem] z-0 group'>
           <div className='w-[24rem] h-[15rem] rounded-lg z-40 shadow-sm  flex flex-col gap-2'>
 
             <div className='w-full h-[80%]'>

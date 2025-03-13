@@ -7,6 +7,7 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Navbar from './components/Navbar';
 import Editor from './pages/Editor';
+import Code from './pages/Code';
 function App() {
 
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/code' element={<Code />} />
           <Route path='/editor/:projectid' element={<Editor />} />
           <Route path="*" element={<NoPage />} />
         </Routes>
