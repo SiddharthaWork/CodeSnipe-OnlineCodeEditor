@@ -56,7 +56,7 @@ export default function GridCard() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {/* New Project Card */}
-      <div className="bg-sky-950/20 backdrop-blur-sm border border-sky-900/30 rounded-xl p-6 flex flex-col items-center justify-center h-full cursor-pointer hover:border-sky-600 hover:shadow-lg hover:shadow-sky-600/10 transition-all duration-300 group">
+      <div className="bg-sky-950/5 backdrop-blur-sm border border-sky-900/30 rounded-xl p-6 flex flex-col items-center justify-center h-full cursor-pointer hover:border-sky-600 hover:shadow-lg hover:shadow-sky-600/10 transition-all duration-300 group">
         <div className="w-16 h-16 rounded-full bg-sky-600/10 flex items-center justify-center mb-4 group-hover:bg-sky-600/20 transition-colors duration-300">
           <Icon
             icon="mingcute:add-fill"
