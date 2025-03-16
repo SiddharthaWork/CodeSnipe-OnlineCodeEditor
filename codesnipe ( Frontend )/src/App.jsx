@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from './pages/Home'
@@ -9,7 +8,6 @@ import Editor from './pages/Editor';
 import Code from './pages/Code';
 import Navbar from './pages/Navbar';
 function App() {
-
 
   return (
     <div>

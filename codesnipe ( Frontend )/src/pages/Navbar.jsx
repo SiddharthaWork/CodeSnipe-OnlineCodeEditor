@@ -20,6 +20,8 @@ const navigationItems = [
       icon: <IconSettings className="w-full h-full" />,
     },
   ];
+  // here are some changes in the navbar
+  
 const Navbar = () => {
   return (
     <div>
