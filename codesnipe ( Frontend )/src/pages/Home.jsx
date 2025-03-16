@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div className='w-full h-full'>
       <div className='flex flex-col justify-center items-center gap-6'>
-        <h1 className='font-kanit text-4xl md:text-5xl font-bold text-white'>Welcome <span className='text-sky-400'> Siddhartha</span></h1>
+        <h1 className='font-kanit text-4xl md:text-5xl font-bold text-white'>✨Innovation Starts <span className='text-sky-400'> Here</span></h1>
 
           <div className="relative w-full max-w-2xl">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">

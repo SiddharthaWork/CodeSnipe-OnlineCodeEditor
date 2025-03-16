@@ -6,15 +6,20 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Editor from './pages/Editor';
 import Code from './pages/Code';
-import Navbar from './pages/Navbar';
+import Navbar from './pages/BottomNavbar';
+import { FloatingNav } from './components/Topbar';
+import { Icon } from "@iconify/react";
+import MainNavbar from './components/MainNavbar';
+import TopNavbar from './pages/TopNavbar';
+
 function App() {
 
   return (
     <div>
       <BrowserRouter>
-        <header className='fixed w-full h-fit z-50' >
-          <Navbar/>
-         
+        <header className='w-full h-fit z-50' >
+          <MainNavbar/>
+          <TopNavbar/>
         </header>
         <main className='w-full h-full overflow-hidden mt-20'>
           <Routes>

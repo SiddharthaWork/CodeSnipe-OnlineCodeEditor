@@ -21,8 +21,8 @@ const navigationItems = [
     },
   ];
   // here are some changes in the navbar
-  
-const Navbar = () => {
+
+const BottomNavbar = () => {
   return (
     <div>
          <FloatingDock
@@ -34,4 +34,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default BottomNavbar

@@ -1,5 +1,5 @@
-import React from 'react'
-import { Icon } from '@iconify/react';
+import { useState } from "react"
+import { Icon } from "@iconify/react"
 
 const list = [
   {
@@ -44,47 +44,81 @@ const list = [
     title: "Hackathon Winner",
     des: "Turning ideas into reality!",
   },
-];
+]
 
 const GridCard = () => {
+  // State to track which card is being hovered (for additional effects)
+  const [hoveredCard, setHoveredCard] = useState(null)
+
   return (
-    <div className='grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 w-full h-full gap-16 justify-center place-items-center'>
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 w-full gap-8 md:gap-10 xl:gap-12 px-[2.5%]">
+      {/* New Project Card */}
+      
+      {/* Project Cards */}
       {list.map((item, index) => (
-        <div key={index} className='relative w-[26rem] h-[16rem] z-0 group'>
-          <div className='w-[24rem] h-[15rem] rounded-lg z-40 shadow-sm  flex flex-col gap-2'>
+        <div
+          key={item.id}
+          className="relative w-[30rem] aspect-video group cursor-pointer"
+          onMouseEnter={() => setHoveredCard(item.id)}
+          onMouseLeave={() => setHoveredCard(null)}
+        >
+          {/* Main Card */}
+          <div
+            className="absolute inset-0 bg-slate-800 rounded-xl overflow-hidden shadow-lg z-10 transition-all duration-300 ease-out
+            group-hover:translate-x-2 group-hover:-translate-y-2"
+          >
+            {/* Card Image */}
+            <div className="w-full h-[70%] relative">
+              <img 
+                src={item.img || "/placeholder.svg"} 
+                alt={item.title} 
+                className="object-cover w-full h-full"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-50"></div>
 
-            <div className='w-full h-[80%]'>
-              <img src={item.img} alt="" className='w-full h-full object-cover' />
+              {/* Floating action buttons that appear on hover */}
+              <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <button className="w-8 h-8 rounded-full bg-slate-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-sky-600 transition-colors">
+                  <Icon icon="mingcute:heart-line" width="16" height="16" />
+                </button>
+                <button className="w-8 h-8 rounded-full bg-slate-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-sky-600 transition-colors">
+                  <Icon icon="mingcute:share-forward-line" width="16" height="16" />
+                </button>
+              </div>
             </div>
-            <div className='w-full h-[20%] py-2 flex gap-2 items-center justify-between'>
-              <div className='flex gap-2 items-center'>
-                <div className='w-10 h-10 overflow-hidden cursor-pointer' onClick={() => showProfile(!profile)}>
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRi6rSH-A48Rg-kaRwlL7p8kFcQn6SxsxBcog&s" alt="" className='w-full h-full object-cover' />
+
+            {/* Card Content */}
+            <div className="w-full h-[30%] p-4 flex justify-between items-center">
+              <div className="flex gap-3 items-center">
+                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-slate-700 flex-shrink-0">
+                  <img
+                    src={item.userprofile || "/placeholder.svg"}
+                    alt="User profile"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <h1 className='font-kanit flex flex-col'>
-                  <span className='text-white text-lg'>{item.title}</span>
-                  <span className='text-white text-sm'>{item.des}</span>
-                </h1>
+                <div className="flex flex-col">
+                  <h3 className="text-white font-medium leading-tight">{item.title}</h3>
+                  <p className="text-gray-400 text-sm">{item.des}</p>
+                </div>
               </div>
 
-              <div className='w-12 h-12 rounded-full flex justify-center items-center'>
-                <Icon icon="pepicons:code" width="24" height="24" color='white' />
+              <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center hover:bg-sky-600 transition-colors">
+                <Icon icon="mingcute:code-line" width="18" height="18" className="text-white" />
               </div>
-
-
             </div>
+          </div>
 
-          </div>
-          <div className='absolute 
-         w-[24rem] h-[14.5rem] group-hover:w-[26rem] group-hover:h-[18rem] group-hover:-top-3 group-hover:-left-4
-         group-hover:shadow-md group-hover:shadow-sky-400 
-         top-6 left-4 bg-[#050a1f]/80 -z-10 rounded-lg transition-all duration-300 ease-in-out '>
-          </div>
+          {/* Background Card - creates the offset shadow effect */}
+          <div
+            className={`absolute inset-0 bg-sky-600/20 rounded-xl -z-0 transition-all duration-500 ease-out
+            ${hoveredCard === item.id ? "shadow-lg shadow-sky-600/20" : ""}`}
+          ></div>
         </div>
       ))}
-
     </div>
   )
 }
 
 export default GridCard
+
