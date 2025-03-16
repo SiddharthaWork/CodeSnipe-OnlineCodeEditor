@@ -21,7 +21,7 @@ function App() {
           <MainNavbar/>
           <TopNavbar/>
         </header>
-        <main className='w-full h-full overflow-hidden mt-20'>
+        <main className='w-full h-full overflow-hidden mt-4'>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/signup' element={<SignUp />} />

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import GridCard from '../components/GridCard';
 import ListCard  from '../components/ListCard';
 import GridBox from './GridBox';
+import { ShinyButton } from '../components/Button';
 const Home = () => {
   const [layout, setLayout] = useState("gridview");
   const [searchQuery, setSearchQuery] = useState("")
@@ -30,6 +31,7 @@ const Home = () => {
               </button>
             )}
         </div>
+       
 
       </div>
 {/* here are some changes that need to be made */}

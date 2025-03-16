@@ -7,12 +7,13 @@ import {
 } from "motion/react";
 import { cn } from "../lib/utils";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 export const FloatingNav = ({
   navItems,
   className
 }) => {
   const { scrollYProgress } = useScroll();
-
+  const nav = useNavigate();
   const [visible, setVisible] = useState(false);
 
   useMotionValueEvent(scrollYProgress, "change", (current) => {
@@ -53,7 +54,7 @@ export const FloatingNav = ({
         {navItems.map((navItem, idx) => (
           <Link
           key={`link=${idx}`}
-            href={navItem.link}
+            to={navItem.link}
             className={cn(
               "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
             )}>
@@ -62,6 +63,7 @@ export const FloatingNav = ({
           </Link>
         ))}
         <button
+        onClick={() => nav("/login")}
           className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full">
           <span>Login</span>
           <span

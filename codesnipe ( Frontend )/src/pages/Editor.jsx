@@ -5,7 +5,7 @@ import { Editor } from '@monaco-editor/react'
 const EditorPage = () => {
   const [expand, setExpand] = useState(false);
   const [htmlCode, setHtmlCode] = useState('<div>hello world</div>');
-  const [cssCode, setCssCode] = useState('* {\n  background-color: black;\n  color: white;\n}');
+  const [cssCode, setCssCode] = useState('* {\n  background-color: white;\n  color: black;\n}');
   const [jsCode, setJsCode] = useState('console.log(\'Hello World\');');
   
   // Use a debounce mechanism to avoid frequent updates

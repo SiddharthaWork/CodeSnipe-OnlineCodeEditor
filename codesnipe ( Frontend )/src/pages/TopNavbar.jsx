@@ -3,9 +3,9 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import { FloatingNav } from '../components/Topbar';
 const TopNavbar = () => {
     const navItems = [
-        { name: "Home", link: "/", icon: <Icon icon="mdi:home" width="20" /> },
-        { name: "Profile", link: "/profile", icon: <Icon icon="mdi:account" width="20" /> },
-        { name: "Settings", link: "/settings", icon: <Icon icon="mdi:cog" width="20" /> },
+        { name: "Explore", link: "/", icon: <Icon icon="mdi:home" width="20" /> },
+        { name: "Projects", link: "/code", icon: <Icon icon="mdi:account" width="20" /> },
+        { name: "Editor", link: "/editor/100", icon: <Icon icon="mdi:cog" width="20" /> },
       ];
     
   return (

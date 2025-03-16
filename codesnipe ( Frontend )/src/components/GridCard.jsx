@@ -51,9 +51,7 @@ const GridCard = () => {
   const [hoveredCard, setHoveredCard] = useState(null)
 
   return (
-    <div className="grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 w-full gap-8 md:gap-10 xl:gap-12 px-[2.5%]">
-      {/* New Project Card */}
-      
+    <div className="grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 w-full gap-8 md:gap-10 xl:gap-12 px-[2.5%]">      
       {/* Project Cards */}
       {list.map((item, index) => (
         <div
@@ -64,7 +62,7 @@ const GridCard = () => {
         >
           {/* Main Card */}
           <div
-            className="absolute inset-0 bg-slate-800 rounded-xl overflow-hidden shadow-lg z-10 transition-all duration-300 ease-out
+            className="absolute inset-0 bg-[#050a1f] rounded-xl overflow-hidden shadow-lg z-10 transition-all duration-300 ease-out
             group-hover:translate-x-2 group-hover:-translate-y-2"
           >
             {/* Card Image */}
@@ -74,7 +72,7 @@ const GridCard = () => {
                 alt={item.title} 
                 className="object-cover w-full h-full"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-50"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#050a1f] to-transparent opacity-50"></div>
 
               {/* Floating action buttons that appear on hover */}
               <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -111,7 +109,7 @@ const GridCard = () => {
 
           {/* Background Card - creates the offset shadow effect */}
           <div
-            className={`absolute inset-0 bg-sky-600/20 rounded-xl -z-0 transition-all duration-500 ease-out
+            className={`absolute inset-0 bg-sky-600 rounded-xl -z-0 transition-all duration-500 ease-out
             ${hoveredCard === item.id ? "shadow-lg shadow-sky-600/20" : ""}`}
           ></div>
         </div>
