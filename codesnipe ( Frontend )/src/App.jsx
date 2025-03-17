@@ -6,9 +6,6 @@ import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import Editor from './pages/Editor';
 import Code from './pages/Code';
-import Navbar from './pages/BottomNavbar';
-import { FloatingNav } from './components/Topbar';
-import { Icon } from "@iconify/react";
 import MainNavbar from './components/MainNavbar';
 import TopNavbar from './pages/TopNavbar';
 

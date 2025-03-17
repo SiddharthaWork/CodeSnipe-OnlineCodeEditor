@@ -9,7 +9,7 @@ const MainNavbar = () => {
         <div className=' absolute -top-10 cursor-pointer' onClick={() => nav("/")}>
         <img src="/codesnipe.gif" alt="CodeSnipe Logo" className='w-[10rem] h-full object-contain'/>
         </div>
-        <div  className='w-full h-[4rem] flex px-4 justify-end items-center'>
+        <div  className='w-full h-[4rem] flex px-12 justify-end items-center'>
         <div className='flex h-fit w-fit justify-center items-center'>
         <ShinyButton onClick={() => nav("/editor/100")} >
                     <div className="flex items-center gap-2">
