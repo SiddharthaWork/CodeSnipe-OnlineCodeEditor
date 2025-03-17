@@ -34,6 +34,7 @@ const Login = () => {
   }
 
   return (
+    // Changes the Ui of the Login page
     <div className="flex h-full min-h-[80vh] w-full flex-col items-center justify-center bg-black p-4 text-white">
       <div className="relative w-full max-w-md">
         {/* Card with animated border */}
