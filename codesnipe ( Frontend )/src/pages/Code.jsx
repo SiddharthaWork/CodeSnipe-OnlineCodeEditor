@@ -66,7 +66,7 @@ export default function CreateProject() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-
+        {/* Changes in the Create New Project */}
           <button className="w-full md:w-[20rem] flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors">
             <Icon icon="ic:baseline-plus" width="20" height="20" />
             <span>Create New Project</span>
