@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
 const secret = "secret"
 
 router.post("/signUp", async (req, res) => {
-  let [username, password, email] = [req.body.username, req.body.password, req.body.email]
+  let {username, password, email} = [req.body.username, req.body.password, req.body.email]
   let emailExists = await userModel.findOne({ email: email })
   if (emailExists) {
     return res.json({ success: false, message: "Email already exists" })
@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
       }
       if (result) {
         let token = jwt.sign({ email:user.email, userId: user._id }, secret);
-        return res.json({ success: true, message: "User Login Successfully",token:token,userId:user._id })
+        return res.json({ success: true, message: "User Login Successfully",token:token, userId:user._id })
       }
       else {
         return res.json({ success: false, message: "The Password or Email Might be invalid" })
@@ -51,7 +51,18 @@ router.post("/login", async (req, res) => {
   else {
     return res.json({ success: false, message: "User Not Found" })
   }
-
 })
 
-module.exports = router;
+router.post("/userDetails", async (req, res) => { 
+  let {userId} = req.body;
+  let user = await userModel.findOne({ _id: userId });
+  if (user) {
+    return res.json({ success: true, message: "User Found",user:user })
+  }
+  else {
+    return res.json({ success: false, message: "User Not Found" })
+  }
+})
+
+module.exports = router; 
+ 
