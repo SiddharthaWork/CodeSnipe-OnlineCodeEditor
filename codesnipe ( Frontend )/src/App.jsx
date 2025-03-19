@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from './pages/Home'
 import NoPage from './pages/Nopage'
 import SignUp from './pages/SignUp';
@@ -8,9 +8,12 @@ import Editor from './pages/Editor';
 import Code from './pages/Code';
 import MainNavbar from './components/MainNavbar';
 import TopNavbar from './pages/TopNavbar';
+import { useState } from 'react';
 
 function App() {
-
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const [user, setUser] = useState(isLoggedIn);
+  // user authentication
   return (
     <div>
       <BrowserRouter>
@@ -20,10 +23,15 @@ function App() {
         </header>
         <main className='w-full h-full overflow-hidden mt-4'>
           <Routes>
-            <Route path='/' element={<Home />} />
+            {user ? (
+              console.log("User is logged in")
+            ) : ( 
+              console.log("User is not logged in")
+            )}
+            <Route path='/' element={<Home />} />            
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/code' element={<Code />} />
+            <Route path='/code' element={isLoggedIn ? <Code /> : <Navigate to="/login" />} />
             <Route path='/editor/:projectid' element={<Editor />} />
             <Route path="*" element={<NoPage />} />
           </Routes>
