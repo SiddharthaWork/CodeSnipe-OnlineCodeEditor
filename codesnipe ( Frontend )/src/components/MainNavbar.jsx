@@ -10,6 +10,7 @@ const MainNavbar = () => {
   const nav = useNavigate();
   const [userdata, setUserData] = useState();
   const [userDetails, setUserDetails] = useState(false);
+  const [error, setError] = useState("");
   const model = useOutsideClick(() => setUserDetails(false));
 
   useEffect(() => {
@@ -33,7 +34,7 @@ const MainNavbar = () => {
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
-        alert("Failed to fetch user data");
+        setError("Server Error Occured");
       }
     };
     if(userLoggedIn()) {
@@ -79,6 +80,7 @@ const MainNavbar = () => {
                 {/* Profile Dropdown - Fixed Outside Overflow Hidden */}
                 {userDetails && (
                   <div className='absolute top-[54px] -right-8 w-[12rem] h-fit rounded-lg flex flex-col items-center bg-[#050a1f] border border-gray-700 text-white p-3 space-y-2 z-50 shadow-lg' ref={model}>
+                    {error && <h1 className='text-sm text-red-600'>{error}</h1>}
                     <h1 className='uppercase font-bold text-lg text-sky-600 break-all'>{userdata?.username}</h1>
                     <h1 className='text-sm inline-block truncate w-full text-center'>{userdata?.email}</h1>
                     <h1 className='text-sm inline-block truncate w-full text-center'>Last Login</h1>
