@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
 const secret = "secret"
 
 router.post("/signUp", async (req, res) => {
-  let {username, password, email} = [req.body.username, req.body.password, req.body.email]
+  let {username, password, email} = req.body;
   let emailExists = await userModel.findOne({ email: email })
   if (emailExists) {
     return res.json({ success: false, message: "Email already exists" })
