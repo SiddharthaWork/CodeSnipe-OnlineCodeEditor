@@ -1,20 +1,37 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
-
+import { API_BASE_URL } from "../../helper"
+import { useNavigate } from "react-router-dom"
+import AuthContext from "../context/AuthContext"
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isFormFocused, setIsFormFocused] = useState(false)
-
-  // Placeholder for cartoon variable
-  const cartoon = "" // Replace with your actual cartoon path or import
+  const nav = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(email, password)
-    setEmail("")
-    setPassword("")
+    fetch(API_BASE_URL + "login", {
+      mode: "cors",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email, password: password }),
+    }).then((res) => {
+      res.json().then((data) => {
+        if (data.success) {
+          // alert("Login successful")
+          login(data.token, data.userId);
+          window.location.href = "/";
+        }
+        else {
+          alert(data.message);
+        }
+      })
+    })
   }
 
   // Handle focus events for the entire form
@@ -131,14 +148,6 @@ const Login = () => {
                 </div>
               </div>
             </motion.div>
-          </div>
-        </div>
-
-        {/* Cartoon image for mobile */}
-        <div className="mt-8 flex justify-center md:hidden">
-          <div className="h-64 w-64 overflow-hidden">
-            {/* Replace with your actual cartoon image path */}
-            <img src={cartoon || "/placeholder.svg"} alt="" className="h-full w-full object-contain" />
           </div>
         </div>
       </div>
