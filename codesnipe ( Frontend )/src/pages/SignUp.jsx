@@ -1,58 +1,183 @@
-import React from 'react'
-import cartoon  from '../assets/chillguy.png'
-import logo from '../assets/codes.gif'
-import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState } from "react"
+import { motion } from "framer-motion"
+import { Link } from "react-router-dom"
+import { API_BASE_URL } from "../../helper"
+import { useNavigate } from "react-router-dom"
 
 const SignUp = () => {
+  const [email, setEmail] = useState("")
+  const [name, setName] = useState("")
+  const [password, setPassword] = useState("")
+  const [isFormFocused, setIsFormFocused] = useState(false)
+  const [error, setError] = useState("")
+  const nav = useNavigate();
 
-    const [username, setUsername] = useState('');
-    const [name, setName] = useState('');
-    const [email, setEmail] = useState(''); 
-    const [password, setPassword] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(username, name, email, password);
-        e.target.reset();
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    console.log(email, name, password, e)
+    fetch(API_BASE_URL + "signup", {
+      mode: "cors",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: email, 
+        username: name,
+        password: password
+       }),
+    }).then((res) => {
+      res.json().then((data) => {
+        if (data.success) {
+          nav("/login")
+        }
+        else{
+          setError(data.message);
+        }
+      })
+    })
+  }
+
+  // Handle focus events for the entire form
+  const handleFocus = () => setIsFormFocused(true)
+  const handleBlur = (e) => {
+    // Only blur if we're not focusing on another form element
+    if (!e.currentTarget.contains(e.relatedTarget)) {
+      setIsFormFocused(false)
     }
+  }
+
+  // Button animation variants
+  const buttonVariants = {
+    initial: { scale: 1 },
+    hover: { scale: 1.02, transition: { duration: 0.2 } },
+    tap: { scale: 0.98, transition: { duration: 0.2 } },
+  }
 
   return (
-    <div className='w-full h-screen bg-black'>
-        <div className='w-full h-full flex justify-center items-center'>
-            <form action=""  onSubmit={handleSubmit} className='w-full h-full flex flex-col justify-center items-center gap-8 mx-44 mb-[10rem]'>
-                <div className='w-[20rem] h-[16rem] overflow-hidden'>
-                    <img src={logo} alt="" />   
+    // Changes the Ui of the Login page
+    <div className="flex h-full min-h-[80vh] w-full flex-col items-center justify-center bg-black p-4 text-white">
+      <div className="relative w-full max-w-md">
+        {/* Card with animated border */}
+        <div className="relative">
+          {/* Card content with border */}
+          <div className="relative rounded-xl overflow-hidden">
+            {/* Border animation using SVG */}
+            <svg className="absolute inset-0 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+              <rect
+                width="100%"
+                height="100%"
+                fill="none"
+                rx="12"
+                ry="12"
+                strokeWidth="6"
+                stroke="#38bdf8"
+                strokeDasharray="675 1050"
+                strokeDashoffset={isFormFocused ? "0" : "1000"}
+                style={{
+                  transition: "stroke-dashoffset 0.8s ease-in-out",
+                }}
+              />
+            </svg>
+
+            <motion.div
+              className="relative rounded-xl bg-[#1a1a1a]/40 p-8 shadow-xl z-10"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              tabIndex="-1" // Make div focusable but not in tab order
+            >
+              <div className="mb-6">
+                <h1 className="text-center text-2xl font-bold text-white">Sign In</h1>
+              </div>
+              <div>
+                {error && (
+                  <p className="text-red-500 text-center">{error}</p>
+                )}
+              </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Email Input */}
+                 <div className="relative">
+                  <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-300">
+                    User Name
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="name"
+                      type="name"
+                      placeholder="Name"
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="h-14 w-full rounded-lg bg-[#252525] px-4 text-white placeholder:font-medium placeholder:text-gray-500 focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div className="relative">
+                  <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-300">
+                    Email
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="email"
+                      type="email"
+                      placeholder="Email"
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="h-14 w-full rounded-lg bg-[#252525] px-4 text-white placeholder:font-medium placeholder:text-gray-500 focus:outline-none"
+                    />
+                  </div>
                 </div>
 
-                <div className='w-[30rem] h-fit space-y-3 relative'>
-                    <input required type="text" onChange={(e) => setUsername(e.target.value)} value={username} placeholder='Username' className='w-full h-14 bg-[#141414] text-white rounded-lg p-4 placeholder:font-semibold placeholder:text-white/50 outline-none' />
-                    <input required type="text" placeholder='Name' onChange={(e) => setName(e.target.value)} value={name} className='w-full h-14 bg-[#141414] rounded-lg p-4 placeholder:font-semibold placeholder:text-white/50 outline-none' />
-                    <input required type="text" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} className='w-full h-14 bg-[#141414] rounded-lg p-4 placeholder:font-semibold placeholder:text-white/50 outline-none' />
-                    <input required type="text" placeholder='Password' onChange={(e) => setPassword(e.target.value)} value={password} className='w-full h-14 bg-[#141414] rounded-lg p-4 placeholder:font-semibold placeholder:text-white/50 outline-none' />
-                    <div className='flex items-center gap-2 justify-center'>
-                    <h1 className='text-white/60 text-sm text-center'>Already have an account</h1>
-                    <Link to='/login' className='text-sky-400'>Sign in</Link>
-                    </div>
+                {/* Password Input */}
+                <div className="relative">
+                  <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-300">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <input
+                      id="password"
+                      type="password"
+                      placeholder="Password"
+                      required
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="h-14 w-full rounded-lg bg-[#252525] px-4 text-white placeholder:font-medium placeholder:text-gray-500 focus:outline-none"
+                    />
+                  </div>
                 </div>
 
-                <div className='flex w-[30rem] h-fit items-center justify-center'>
-                    <button type="submit" className='w-full h-14 bg-sky-400 rounded-lg text-white'>Sign Up</button>
+                {/* Sign In Button with animation */}
+                <motion.button
+                  type="submit"
+                  className="h-14 w-full rounded-lg bg-sky-400 font-medium text-white shadow-lg shadow-sky-400/20"
+                  variants={buttonVariants}
+                  initial="initial"
+                  whileHover="hover"
+                  whileTap="tap"
+                >
+                  Sign In
+                </motion.button>
+              </form>
+
+              <div className="mt-6 flex justify-center">
+                <div className="flex items-center gap-2">
+                  <p className="text-sm text-gray-400">Create an account</p>
+                  <Link to="/login" className="text-sky-400 hover:underline">
+                    SignIn
+                  </Link>
                 </div>
-
-            </form>
-
-
-            <div className='w-[40rem] h-[30rem] transform -translate-x-[20rem] overflow-hidden'>
-            <img src={cartoon} alt="" className='w-full h-full object-cover  ' />
-
-            </div>
-
+              </div>
+            </motion.div>
+          </div>
         </div>
-
-
+      </div>
     </div>
   )
 }
 
 export default SignUp
+
