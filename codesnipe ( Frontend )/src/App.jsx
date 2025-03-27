@@ -12,7 +12,6 @@ import { useState } from 'react';
 
 function App() {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
-  const [user, setUser] = useState(isLoggedIn);
   // user authentication
   return (
     <div>
@@ -22,12 +21,7 @@ function App() {
           <TopNavbar/>
         </header>
         <main className='w-full h-full overflow-hidden mt-4'>
-          <Routes>
-            {user ? (
-              console.log("User is logged in")
-            ) : ( 
-              console.log("User is not logged in")
-            )}
+          <Routes> 
             <Route path='/' element={<Home />} />            
             <Route path='/signup' element={<SignUp />} />
             <Route path='/login' element={<Login />} />

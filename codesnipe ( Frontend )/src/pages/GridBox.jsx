@@ -4,7 +4,6 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import { useState } from "react"
 
 export default function GridCard() {
-  // Sample project data - in a real app, this would come from your database
   const [projects, setProjects] = useState([
     {
       id: 1,
