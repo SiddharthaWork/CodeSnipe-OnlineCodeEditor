@@ -2,6 +2,8 @@
 
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useState } from "react"
+import Modal from "../components/Modal"
+import CreateModel from "../components/CreateModel"
 
 export default function GridCard() {
   const [projects, setProjects] = useState([
@@ -48,14 +50,20 @@ export default function GridCard() {
 
   ])
 
+const [showModal, setShowModal] = useState(false);
+
   const toggleFavorite = (id) => {
     setProjects(projects.map((project) => (project.id === id ? { ...project, favorite: !project.favorite } : project)))
   }
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      { showModal &&
+      <Modal setShow={setShowModal} >
+        <CreateModel/>
+        </Modal>}
       {/* New Project Card */}
-      <div className="bg-sky-950/5 backdrop-blur-sm border border-sky-900/30 rounded-xl p-6 flex flex-col items-center justify-center h-full cursor-pointer hover:border-sky-600 hover:shadow-lg hover:shadow-sky-600/10 transition-all duration-300 group">
+      <div onClick={() => !setShowModal(true)} className="bg-sky-950/5 backdrop-blur-sm border border-sky-900/30 rounded-xl p-6 flex flex-col items-center justify-center h-full cursor-pointer hover:border-sky-600 hover:shadow-lg hover:shadow-sky-600/10 transition-all duration-300 group">
         <div className="w-16 h-16 rounded-full bg-sky-600/10 flex items-center justify-center mb-4 group-hover:bg-sky-600/20 transition-colors duration-300">
           <Icon
             icon="mingcute:add-fill"

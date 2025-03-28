@@ -7,8 +7,8 @@ const modal = useOutsideClick(() => {
 })
 
   return (
-    <div className='w-full h-full min-h-screen bg-sky-900 flex justify-center items-center'>
-      <div ref={modal} className='w-full h-full text-black bg-black'>
+    <div className='fixed top-0 left-0 z-50 w-full h-full bg-black bg-opacity-50 flex justify-center items-center'>
+      <div ref={modal} className='w-fit h-fit '>
         {children}
       </div>
 
