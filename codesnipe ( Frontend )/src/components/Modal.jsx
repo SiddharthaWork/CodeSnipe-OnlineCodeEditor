@@ -1,6 +1,7 @@
 import React from 'react'
 import useOutsideClick from '../hooks/useOutsideClick'
 
+// This Model is Used for Creating a Model that can be used to create a new project
 const Modal = ({children, setShow}) => {
 const modal = useOutsideClick(() => {
   setShow(false)
