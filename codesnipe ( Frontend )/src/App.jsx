@@ -11,6 +11,7 @@ import TopNavbar from './pages/TopNavbar';
 
 // Protected Route component
 // Create a Protected Route Improve the code reuse and optimizing
+// Create a Protected Route Componente to protect the routes and Improve the code reuse and optimizing
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   return isLoggedIn ? children : <Navigate to="/login" />;
