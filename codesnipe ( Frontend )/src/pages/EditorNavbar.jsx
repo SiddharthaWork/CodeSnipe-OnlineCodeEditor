@@ -1,18 +1,18 @@
 import React from 'react'
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { FloatingNav } from '../components/Topbar';
-const TopNavbar = () => {
+import { EditorNav } from '../components/EditorBar';
+const EditorNavbar = () => {
     const navItems = [
         { name: "Explore", link: "/", icon: <Icon icon="mdi:home" width="20" /> },
-        { name: "Projects", link: "/code", icon: <Icon icon="mdi:account" width="20" /> },
-        // { name: "Editor", link: "/editor/100", icon: <Icon icon="mdi:cog" width="20" /> },
+        { name: "Share", link: "/editor/100", icon: <Icon icon="material-symbols:share-outline" width="20" /> },
       ];
     
   return (
     <div>
-         <FloatingNav navItems={navItems}  />
+         <EditorNav navItems={navItems}  />
     </div>
   )
 }
 
-export default TopNavbar
+export default EditorNavbar

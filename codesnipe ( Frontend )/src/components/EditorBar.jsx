@@ -9,7 +9,7 @@ import { cn } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
-export const FloatingNav = ({
+export const EditorNav = ({
   navItems,
   className
 }) => {
@@ -64,8 +64,8 @@ export const FloatingNav = ({
         <button
       onClick={() => nav("/editor/100")}
           className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full flex items-center space-x-2">
-          <span>Code</span>
-          <Icon icon="tdesign:code" className="w-5 h-5" />
+          <span>Save</span>
+          <Icon icon="uil:save" width="20" /> 
           <span
             className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
         </button>

@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from './pages/Home'
 import NoPage from './pages/Nopage'
 import SignUp from './pages/SignUp';
@@ -8,18 +8,21 @@ import Editor from './pages/Editor';
 import Code from './pages/Code';
 import MainNavbar from './components/MainNavbar';
 import TopNavbar from './pages/TopNavbar';
+import EditorNavbar from './pages/EditorNavbar';
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   return isLoggedIn ? children : <Navigate to="/login" />;
 };
-function App() {
+function AppWrapper() {
+  const location = useLocation();
+  const isEditorPage = location.pathname.startsWith('/editor/');
+
   return (
-    <BrowserRouter>
       <div className="min-h-screen flex flex-col">
         <header className='w-full h-fit z-50 '>
           <MainNavbar />
-          <TopNavbar />
+          {isEditorPage ? <EditorNavbar /> : <TopNavbar />}
         </header>
         
         <main className='flex-1 w-full overflow-x-hidden mt-4'>
@@ -40,6 +43,13 @@ function App() {
           </Routes>
         </main>
       </div>
+  )
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppWrapper />
     </BrowserRouter>
   )
 }
