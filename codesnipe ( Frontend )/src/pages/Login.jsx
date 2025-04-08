@@ -1,43 +1,46 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { API_BASE_URL } from "../../helper"
-import { useNavigate } from "react-router-dom"
 import AuthContext from "../context/AuthContext"
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isFormFocused, setIsFormFocused] = useState(false)
-  const nav = useNavigate();
   const { login } = useContext(AuthContext);
+  const[error, setError] = useState("");
+  const[servererror, setServerError] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    fetch(API_BASE_URL + "login", {
-      mode: "cors",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email, password: password }),
-    }).then((res) => {
-      res.json().then((data) => {
-        if (data.success) {
-          // alert("Login successful")
-          login(data.token, data.userId);
-          window.location.href = "/";
-        }
-        else {
-          alert(data.message);
-        }
-      })
-    })
-  }
 
-  // Handle focus events for the entire form
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(API_BASE_URL + "login", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        login(data.token, data.userId);
+        window.location.href = "/";
+      } else {
+        setError(data.message || "Invalid credentials");
+      }
+    } catch (err) {
+      setServerError(true);
+      console.error("Login failed:", err);
+    }
+  };
+
   const handleFocus = () => setIsFormFocused(true)
   const handleBlur = (e) => {
-    // Only blur if we're not focusing on another form element
     if (!e.currentTarget.contains(e.relatedTarget)) {
       setIsFormFocused(false)
     }
@@ -88,6 +91,12 @@ const Login = () => {
               <div className="mb-6">
                 <h1 className="text-center text-2xl font-bold text-white">Sign In</h1>
               </div>
+                  {
+                    (servererror || error) &&
+                    <div className="mb-4">
+                    <p className="text-red-500 text-center">{error ? error : "Server Error Occured"}</p>
+                  </div>
+                  }
 
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Email Input */}
@@ -152,8 +161,7 @@ const Login = () => {
         </div>
       </div>
     </div>
-  )
+)
 }
-
 export default Login
 
