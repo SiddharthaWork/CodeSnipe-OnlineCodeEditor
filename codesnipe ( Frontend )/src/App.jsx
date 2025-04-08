@@ -14,6 +14,7 @@ const ProtectedRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   return isLoggedIn ? children : <Navigate to="/login" />;
 };
+// Good way to optimize it 
 function AppWrapper() {
   const location = useLocation();
   const isEditorPage = location.pathname.startsWith('/editor/');
