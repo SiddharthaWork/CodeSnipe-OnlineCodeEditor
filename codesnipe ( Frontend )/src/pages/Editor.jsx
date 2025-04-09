@@ -18,9 +18,7 @@ const EditorPage = () => {
       iframeRef.current.srcdoc = html + css + js;
     }
   }
-  // Some ui changes
-
-
+  // Some ui 
   const debouncedExecute = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
@@ -114,9 +112,9 @@ const EditorPage = () => {
                 <div className='bg-[#1d1e22] relative p-2 w-fit h-fit border-t-2 border-white/50 flex gap-1 items-center'>
                   <Icon icon="vscode-icons:file-type-js" width="24" height="24" />
                   <h1 className='font-kanit text-2xl'>Javascript</h1>
-                  <div className='absolute top-2 -right-[24rem] rounded-full w-fit h-fit cursor-pointer'>
+                  {/* <div className='absolute top-2 -right-[24rem] rounded-full w-fit h-fit cursor-pointer'>
                     <Icon icon="ic:sharp-flip" width="24" height="24" />
-                  </div>
+                  </div> */}
                 </div>
                 <div className='bg-[#1d1e22] p-2 w-full h-full border-white/15 border-r-2'>
                   <Editor
