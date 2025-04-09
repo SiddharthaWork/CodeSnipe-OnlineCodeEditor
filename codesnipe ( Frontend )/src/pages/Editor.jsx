@@ -18,7 +18,6 @@ const EditorPage = () => {
       iframeRef.current.srcdoc = html + css + js;
     }
   }
-  // Some ui 
   const debouncedExecute = () => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
