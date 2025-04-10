@@ -84,7 +84,7 @@ const MainNavbar = () => {
                     <h1 className='uppercase font-bold text-lg text-sky-600 break-all'>{userdata?.username}</h1>
                     <h1 className='text-sm inline-block truncate w-full text-center'>{userdata?.email}</h1>
                     <h1 className='text-sm inline-block truncate w-full text-center'>Last Login</h1>
-                    <div className='bg-white w-full h-fit rounded-lg text-sky-600 font-bold'>
+                    <div className='bg-white w-full h-fit rounded-md text-sky-600 font-bold'>
                       <h1 className='text-center'>{userdata?.lastOnline && lastLogin()}</h1>
                     </div>
                     <ShinyButton onClick={() => logout()}>
