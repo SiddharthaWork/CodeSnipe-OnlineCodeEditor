@@ -29,7 +29,9 @@ const CreateModel = () => {
         });
         const data = await response.json();
         if (data.success) {
-          toast.success(data.message);
+          toast('Project Created', {
+            icon: '👏',
+          });
           nav("/editor/" + data.projectId)
         } else {
           alert(data.message);

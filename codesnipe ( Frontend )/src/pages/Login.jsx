@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { API_BASE_URL } from "../../helper"
 import AuthContext from "../context/AuthContext"
+import toast from "react-hot-toast"
 const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
@@ -28,8 +29,11 @@ const Login = () => {
       const data = await response.json();
 
       if (data.success) {
+        toast.success(data.message);
         login(data.token, data.userId);
-        window.location.href = "/";
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 1000);
       } else {
         setError(data.message || "Invalid credentials");
       }
