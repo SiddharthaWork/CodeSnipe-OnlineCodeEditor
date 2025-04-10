@@ -3,6 +3,7 @@ var router = express.Router();
 var userModel = require("../Model/UserModel")
 var bcrypt = require("bcryptjs")
 var jwt = require("jsonwebtoken")
+var projectModel = require("../Model/ProjectModel")
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -12,7 +13,7 @@ router.get('/', function (req, res, next) {
 const secret = "secret"
 
 router.post("/signUp", async (req, res) => {
-  let {username, password, email} = req.body;
+  let { username, password, email } = req.body;
   let emailExists = await userModel.findOne({ email: email })
   if (emailExists) {
     return res.json({ success: false, message: "Email already exists" })
@@ -36,12 +37,12 @@ router.post("/login", async (req, res) => {
   let user = await userModel.findOne({ email: email });
   if (user) {
     bcrypt.compare(password, user.password, function (err, result) {
-      if(err){ 
+      if (err) {
         return res.json({ success: false, message: "Something went wrong" })
       }
       if (result) {
-        let token = jwt.sign({ email:user.email, userId: user._id }, secret);
-        return res.json({ success: true, message: "User Login Successfully",token:token, userId:user._id })
+        let token = jwt.sign({ email: user.email, userId: user._id }, secret);
+        return res.json({ success: true, message: "User Login Successfully", token: token, userId: user._id })
       }
       else {
         return res.json({ success: false, message: "The Password or Email Might be invalid" })
@@ -53,16 +54,40 @@ router.post("/login", async (req, res) => {
   }
 })
 
-router.post("/userDetails", async (req, res) => { 
-  let {userId} = req.body;
+router.post("/userDetails", async (req, res) => {
+  let { userId } = req.body;
   let user = await userModel.findOne({ _id: userId });
   if (user) {
-    return res.json({ success: true, message: "User Found",user:user })
+    return res.json({ success: true, message: "User Found", user: user })
   }
   else {
     return res.json({ success: false, message: "User Not Found" })
   }
 })
 
-module.exports = router; 
- 
+
+router.post("/createProject", async (req, res) => {
+  let { userId, title } = req.body;
+  let user = await userModel.findOne({ _id: userId });
+
+  try {
+    if (!user) {
+      return res.json({ success: false, message: "User Not Found" })
+    }
+
+    if (user) {
+      let project = await projectModel.create({
+        title: title,
+        created_by: userId
+      })
+      return res.json({ success: true, message: "Project Created Successfully", projectId: project._id })
+    }
+  }
+
+  catch(error){
+    return res.status(500).json({ success: false, message: "Something went wrong" })
+  }
+
+})
+
+module.exports = router;
