@@ -9,41 +9,61 @@ import Code from './pages/Code';
 import MainNavbar from './components/MainNavbar';
 import TopNavbar from './pages/TopNavbar';
 import EditorNavbar from './pages/EditorNavbar';
+import { div, path } from 'motion/react-client';
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   return isLoggedIn ? children : <Navigate to="/login" />;
 };
+
+const LoginProtectedRoute = ({ children }) => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  return isLoggedIn ? <Navigate to="/" /> : children;
+}
+
+const LoginProtection = [
+  {
+    path: '/signup',
+    element: <SignUp />
+  },
+  {
+    path: '/login',
+    element: <Login />
+  }
+]
 // Good way to optimize it 
 function AppWrapper() {
   const location = useLocation();
   const isEditorPage = location.pathname.startsWith('/editor/');
 
   return (
-      <div className="min-h-screen flex flex-col">
-        <header className='w-full h-fit z-50 '>
-          <MainNavbar />
-          {isEditorPage ? <EditorNavbar /> : <TopNavbar />}
-        </header>
-        
-        <main className='flex-1 w-full overflow-x-hidden mt-4'>
-          <Routes> 
-            <Route path='/' element={<Home />} />            
-            <Route path='/signup' element={<SignUp />} />
-            <Route path='/login' element={<Login />} />
-            <Route 
-              path='/code' 
-              element={
-                <ProtectedRoute>
-                  <Code />
-                </ProtectedRoute>
-              } 
-            />
-            <Route path='/editor/:projectid' element={<Editor />} />
-            <Route path="*" element={<NoPage />} />
-          </Routes>
-        </main>
-      </div>
+    <div className="min-h-screen flex flex-col">
+      <header className='w-full h-fit z-50 '>
+        <MainNavbar />
+        {isEditorPage ? <EditorNavbar /> : <TopNavbar />}
+      </header>
+
+      <main className='flex-1 w-full overflow-x-hidden mt-4'>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          {LoginProtection.map((
+            { path, element }
+          ) => (
+            <Route key={path} path={path} element={<LoginProtectedRoute>{element}</LoginProtectedRoute>} />
+          ))}
+          <Route
+            path='/code'
+            element={
+              <ProtectedRoute>
+                <Code />
+              </ProtectedRoute>
+            }
+          />
+          <Route path='/editor/:projectid' element={<Editor />} />
+          <Route path="*" element={<NoPage />} />
+        </Routes>
+      </main>
+    </div>
   )
 }
 

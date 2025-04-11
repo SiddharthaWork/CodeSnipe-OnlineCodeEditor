@@ -34,11 +34,11 @@ const CreateModel = () => {
           });
           nav("/editor/" + data.projectId)
         } else {
-          alert(data.message);
+          toast.error(data.message);
         }
       }
     } catch (error) {
-      alert("Error fetching user data:", error);    }
+      toast.error("Error Creating Project");   }
   }
     
   return (

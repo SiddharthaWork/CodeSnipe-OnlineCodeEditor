@@ -38,8 +38,7 @@ const Login = () => {
         setError(data.message || "Invalid credentials");
       }
     } catch (err) {
-      setServerError(true);
-      console.error("Login failed:", err);
+      toast.error("Server Error Occured");
     }
   };
 

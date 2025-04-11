@@ -3,6 +3,7 @@ import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import { API_BASE_URL } from "../../helper"
 import { useNavigate } from "react-router-dom"
+import toast from "react-hot-toast"
 
 const SignUp = () => {
   const [email, setEmail] = useState("")
@@ -13,29 +14,34 @@ const SignUp = () => {
   const nav = useNavigate();
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(email, name, password, e)
-    fetch(API_BASE_URL + "signup", {
-      mode: "cors",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email, 
-        username: name,
-        password: password
-       }),
-    }).then((res) => {
-      res.json().then((data) => {
-        if (data.success) {
-          nav("/login")
-        }
-        else{
-          setError(data.message);
-        }
-      })
-    })
+    try {
+      const response = await fetch(API_BASE_URL + "signup", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          username: name,
+          password: password
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        toast.success(data.message);
+        nav("/login")
+      } else {
+        setError(data.message);
+      }
+    }
+    catch (error) {
+      toast.error("Server Error Occured");
+    }
   }
 
   // Handle focus events for the entire form
@@ -99,7 +105,7 @@ const SignUp = () => {
               </div>
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Email Input */}
-                 <div className="relative">
+                <div className="relative">
                   <label htmlFor="name" className="mb-2 block text-sm font-medium text-gray-300">
                     User Name
                   </label>
