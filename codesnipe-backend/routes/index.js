@@ -42,7 +42,7 @@ router.post("/login", async (req, res) => {
       }
       if (result) {
         let token = jwt.sign({ email: user.email, userId: user._id }, secret);
-        return res.json({ success: true, message: "User Login Successfully", token: token, userId: user._id })
+        return res.json({ success: true, message: "Login Successfully", token: token, userId: user._id })
       }
       else {
         return res.json({ success: false, message: "The Password or Email Might be invalid" })
