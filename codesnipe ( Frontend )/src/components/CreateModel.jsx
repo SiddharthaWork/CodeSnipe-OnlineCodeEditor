@@ -6,39 +6,38 @@ import { API_BASE_URL } from '../../helper'
 import toast from 'react-hot-toast'
 
 const CreateModel = () => {
-
-  const[ title, setTitle] = React.useState(false)
-  const nav =  useNavigate();
+  const [title, setTitle] = React.useState("")
+  const nav = useNavigate();
   const userID = localStorage.getItem("userId");
-  console.log(userID);
 
-  
   const createProject = async (e) => {
     e.preventDefault()
-    try{
-      if(title === ""){
-        alert("Please Enter a Valid Title")
-      } else {
-        const response = await fetch(API_BASE_URL + "createProject", {
-          method: "POST",
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ title, userId: userID }), 
+        if (!title || title.trim() === "") {
+      toast.error("Please enter a project title");
+      return;
+    }
+
+    try {
+      const response = await fetch(API_BASE_URL + "createProject", {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ title: title.trim(), userId: userID }), 
+      });
+      const data = await response.json();
+      if (data.success) {
+        toast('Project Created', {
+          icon: '👏',
         });
-        const data = await response.json();
-        if (data.success) {
-          toast('Project Created', {
-            icon: '👏',
-          });
-          nav("/editor/" + data.projectId)
-        } else {
-          toast.error(data.message);
-        }
+        nav("/editor/" + data.projectId)
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
-      toast.error("Error Creating Project");   }
+      toast.error("Error Creating Project");
+    }
   }
     
   return (
@@ -47,17 +46,19 @@ const CreateModel = () => {
             Project Title
           <Icon icon="tdesign:code" className="w-6 h-6" />
         </h1>
-    <input onChange={(e) => 
-      setTitle(e.target.value)
-      } type="text" className='w-full bg-white border-[#0f1a4d] text-black rounded-md p-2 outline-1 transition-all' />
+        <input 
+          onChange={(e) => setTitle(e.target.value)} 
+          value={title}
+          type="text" 
+          className='w-full bg-white border-[#0f1a4d] text-black rounded-md p-2 outline-1 transition-all' 
+          placeholder="Enter project title"
+        />
 
-    <div className='text-center'>
-    <ShinyButton className='w-fit min-w-[20rem] h-fit mt-2 '>
-        Create
-    </ShinyButton>
-    </div>
-
-
+        <div className='text-center'>
+          <ShinyButton className='w-fit min-w-[20rem] h-fit mt-2 '>
+              Create
+          </ShinyButton>
+        </div>
     </form>
   )
 }
