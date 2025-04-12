@@ -78,7 +78,7 @@ router.post("/createProject", async (req, res) => {
     if (user) {
       let project = await projectModel.create({
         title: title,
-        created_by: userId
+        userId: userId
       })
       return res.json({ success: true, message: "Project Created Successfully", projectId: project._id })
     }
@@ -86,6 +86,19 @@ router.post("/createProject", async (req, res) => {
 
   catch(error){
     return res.status(500).json({ success: false, message: "Something went wrong" })
+  }
+})
+
+router.post("/getProjects", async (req, res) => {
+  let { userId } = req.body;
+  let user = await userModel.findOne({ _id: userId });
+
+  if (user) {
+    let projects = await projectModel.find({ userId: userId });
+    return res.json({ success: true, message: "Projects Found", projects: projects })
+  }
+  else {
+    return res.json({ success: false, message: "User Have not created any project" })    
   }
 
 })
