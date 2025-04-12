@@ -1,60 +1,52 @@
 "use client"
 
 import { Icon } from "@iconify/react/dist/iconify.js"
-import { useState } from "react"
-
+import { useCallback, useEffect, useState } from "react"
+import { API_BASE_URL } from "../../helper"
+import { use } from "react";
 export default function ListCard() {
   // Sample project data - in a real app, this would come from your database
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      title: "Portfolio Website",
-      description: "Personal portfolio with HTML, CSS and JavaScript",
-      lastEdited: "2 hours ago",
-      language: "html",
-      favorite: true,
-    },
-    {
-      id: 2,
-      title: "Todo App",
-      description: "Simple todo application with local storage",
-      lastEdited: "Yesterday",
-      language: "javascript",
-      favorite: false,
-    },
-    {
-      id: 3,
-      title: "Responsive Dashboard",
-      description: "Admin dashboard with responsive design",
-      lastEdited: "3 days ago",
-      language: "css",
-      favorite: true,
-    },
-    {
-      id: 4,
-      title: "Landing Page",
-      description: "Product landing page with animations",
-      lastEdited: "1 week ago",
-      language: "html",
-      favorite: false,
-    },
-    {
-      id: 5,
-      title: "Image Gallery",
-      description: "Dynamic image gallery with filtering",
-      lastEdited: "2 weeks ago",
-      language: "javascript",
-      favorite: false,
-    },
-    {
-      id: 6,
-      title: "API Integration",
-      description: "Example of fetching and displaying API data",
-      lastEdited: "1 month ago",
-      language: "javascript",
-      favorite: false,
-    },
-  ])
+
+  const [error, setError] = useState(null);
+  const [projects, setProjects] = useState([]);
+
+  const getProjects = async () => {
+    try {
+      const response = await fetch(API_BASE_URL + "getProjects", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: localStorage.getItem("userId") }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        // Map the projects data immediately after receiving it
+        const mappedData = data.projects.map((project) => ({
+          id: project._id,
+          title: project.title,
+          description: project.description || "Personal portfolio with HTML, CSS and JavaScript",
+          lastEdited: project.updated_at || "2 hours ago",
+          language: project.language || "html",
+          favorite: project.favorite || false,
+        }));
+        setProjects(mappedData);
+      } else {
+        setError(data.message);
+      }
+    }
+    catch (error) {
+      console.error("Error fetching user data:", error);
+      setError("Server Error Occured");
+    }
+  }
+
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  console.log("Current projects:", projects);
 
   const toggleFavorite = (id) => {
     setProjects(projects.map((project) => (project.id === id ? { ...project, favorite: !project.favorite } : project)))
