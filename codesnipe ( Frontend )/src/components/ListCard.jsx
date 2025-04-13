@@ -80,7 +80,6 @@ export default function ListCard() {
         <div className="col-span-2 text-right">ACTIONS</div>
       </div>
 
-      {/* Project Rows */}
       {projects.map((project, index) => (
         <div
           key={project.id}
