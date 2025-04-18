@@ -8,7 +8,7 @@ import { ShinyButton } from '../components/Button';
 import Search from './(HomeComponents)/Search';
 import Modal from '../components/Modal';
 const Home = () => {
-  const [layout, setLayout] = useState("gridview");
+  const [layout, setLayout] = useState("listview");
   const [show,setShow] = useState(true)
     
   return (
