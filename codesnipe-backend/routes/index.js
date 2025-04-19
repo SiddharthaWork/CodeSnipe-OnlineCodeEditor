@@ -103,4 +103,15 @@ router.post("/getProjects", async (req, res) => {
 
 })
 
+router.delete("/deleteProject", async (req, res) => {
+  let { projectId } = req.body;
+  let project = await projectModel.findOneAndDelete({ _id: projectId });
+  if (project) {
+    return res.json({ success: true, message: "Project Deleted Successfully" })
+  }
+  else {
+    return res.json({ success: false, message: "Project Not Found" })
+  }
+})
+
 module.exports = router;
