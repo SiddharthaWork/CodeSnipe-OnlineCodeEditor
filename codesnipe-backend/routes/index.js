@@ -125,4 +125,25 @@ router.update("/updateProjects", async (req, res) => {
   }
 })
 
+router.get("/getProject", async (req, res) => {
+  let { projectId } = req.query;
+  let project = await projectModel.findOne({ _id: projectId });
+  if (project) {
+    return res.json({ success: true, message: "Project Found", project: project })
+  }
+  else {
+    return res.json({ success: false, message: "Project Not Found" })
+  }
+})
+
+router.getall("/getAllProjects", async (req, res) => {
+  let projects = await projectModel.find();
+  if (projects) {
+    return res.json({ success: true, message: "Projects Found", projects: projects })
+  }
+  else {
+    return res.json({ success: false, message: "Projects Not Found" })
+  }
+})
+
 module.exports = router;
