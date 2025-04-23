@@ -49,8 +49,6 @@ const Home = () => {
       <div className='w-full h-full flex flex-col gap-6 p-12 mx-auto'>
             <h1 className='text-2xl font-bold ml-10'>Picked By <span className='text-sky-600'>CodeSnipe</span></h1>
               <GridCard />
-              {/* Here are some changes */}
-              <GridCard />
       </div>
       {/* <button onClick={() => setShow(!show)}>Onclick</button>
     { show &&
