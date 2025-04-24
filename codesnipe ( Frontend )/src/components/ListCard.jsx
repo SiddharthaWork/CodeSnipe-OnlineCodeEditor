@@ -3,13 +3,17 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useCallback, useEffect, useState } from "react"
 import { API_BASE_URL } from "../../helper"
-import { use } from "react";
+import CreateModel from "./CreateModel";
+import Modal from "./Modal";
+import { div } from "motion/react-client";
+import { Diff } from "lucide-react";
+import toast from "react-hot-toast";
 export default function ListCard() {
   // Sample project data - in a real app, this would come from your database
 
   const [error, setError] = useState(null);
   const [projects, setProjects] = useState([]);
-
+  const [show, setShow ] = useState(false);
   const getProjects = async () => {
     try {
       const response = await fetch(API_BASE_URL + "getProjects", {
@@ -46,6 +50,32 @@ export default function ListCard() {
     getProjects();
   }, []);
 
+
+  const deleteProject = async (id) => {
+    try{
+      const response = await fetch(`${API_BASE_URL}deleteProject/${id}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      const data =  await response.json();
+      if(data.success){
+        getProjects();
+        console.log(data ,"this has been deleted from the db");
+        toast.success(data.message);
+      }else{
+        setError(data.message);
+      }
+    }
+    catch(error){
+      console.error("Error deleting project:", error);
+      setError("Server Error Occured");
+    }
+    }
+  
+
   console.log("Current projects:", projects);
 
   const toggleFavorite = (id) => {
@@ -53,6 +83,12 @@ export default function ListCard() {
   }
 
   return (
+    <>
+          {show &&
+        <Modal setShow={setShow}>
+          <CreateModel/>
+        </Modal>
+}
     <div className="bg-[#050a1f] backdrop-blur-sm border border-sky-900/30 rounded-xl overflow-hidden hover:shadow-lg hover:shadow-sky-600/10 transition-all duration-300">
       {/* Create New Project Row */}
       <div className="border-b border-sky-900/30 hover:bg-slate-700/50 transition-colors duration-300 cursor-pointer group">
@@ -65,7 +101,7 @@ export default function ListCard() {
               height="20"
             />
           </div>
-          <div>
+          <div onClick={() => setShow(true)}>
             <h3 className="font-medium text-white">Create New Project</h3>
             <p className="text-gray-400 text-sm">Start coding with HTML, CSS, and JavaScript</p>
           </div>
@@ -118,7 +154,7 @@ export default function ListCard() {
                 <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
                   <Icon icon="mingcute:copy-fill" width="16" height="16" />
                 </button>
-                <button className="p-1.5 rounded-md hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 transform hover:-translate-y-0.5">
+                <button onClick={() => deleteProject(project.id)} className="p-1.5 rounded-md hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 transform hover:-translate-y-0.5">
                   <Icon icon="mingcute:delete-fill" width="16" height="16" />
                 </button>
               </div>
@@ -150,14 +186,14 @@ export default function ListCard() {
               <Icon icon="mingcute:time-line" className="opacity-70" width="14" height="14" />
               {project.lastEdited}
             </div>
-            <div className="col-span-2 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="col-span-2 flex justify-end gap-2 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
               <button className="p-1.5 rounded-md bg-sky-600 hover:bg-sky-500 text-white transition-all duration-200">
                 <Icon icon="mingcute:edit-line" width="18" height="18" />
               </button>
               <button className="p-1.5 rounded-md bg-slate-700 hover:bg-slate-600 text-white transition-all duration-200">
                 <Icon icon="mingcute:eye-line" width="18" height="18" />
               </button>
-              <button className="p-1.5 rounded-md bg-red-900/50 hover:bg-red-900 text-white transition-all duration-200">
+              <button onClick={() => deleteProject(project.id)} className="p-1.5 rounded-md bg-red-900/50 hover:bg-red-900 text-white transition-all duration-200">
                 <Icon icon="mingcute:delete-fill" width="18" height="18" />
               </button>
             </div>
@@ -165,6 +201,7 @@ export default function ListCard() {
         </div>
       ))}
     </div>
+    </>
   )
 }
 
