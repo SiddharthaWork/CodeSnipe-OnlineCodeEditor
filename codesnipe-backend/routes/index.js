@@ -103,18 +103,22 @@ router.post("/getProjects", async (req, res) => {
 
 })
 
-router.delete("/deleteProject", async (req, res) => {
-  let { projectId } = req.body;
-  let project = await projectModel.findOneAndDelete({ _id: projectId });
-  if (project) {
-    return res.json({ success: true, message: "Project Deleted Successfully" })
+router.delete("/deleteProject/:projectId", async (req, res) => {
+  let { projectId } = req.params;
+  try {
+    let project = await projectModel.findOneAndDelete({ _id: projectId });
+    if (project) {
+      return res.json({ success: true, message: "Project Deleted Successfully" });
+    } else {
+      return res.json({ success: false, message: "Project Not Found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server Error", error: error.message });
   }
-  else {
-    return res.json({ success: false, message: "Project Not Found" })
-  }
-})
+});
 
-router.update("/updateProjects", async (req, res) => {
+
+router.patch("/updateProjects", async (req, res) => {
   let { projectId, title } = req.body;
   let project = await projectModel.findOneAndUpdate({ _id: projectId }, { title: title });
   if (project) {
@@ -136,7 +140,7 @@ router.get("/getProject", async (req, res) => {
   }
 })
 
-router.getall("/getAllProjects", async (req, res) => {
+router.get("/getAllProjects", async (req, res) => {
   let projects = await projectModel.find();
   if (projects) {
     return res.json({ success: true, message: "Projects Found", projects: projects })
