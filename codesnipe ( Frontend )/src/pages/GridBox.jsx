@@ -1,60 +1,93 @@
 "use client"
 
 import { Icon } from "@iconify/react/dist/iconify.js"
-import { useState } from "react"
+import { useDebugValue, useEffect, useState } from "react"
 import Modal from "../components/Modal"
 import CreateModel from "../components/CreateModel"
+import { API_BASE_URL } from "../../helper"
+import toast from "react-hot-toast"
 
 export default function GridCard() {
-  const [projects, setProjects] = useState([
-    {
-      id: 1,
-      title: "Portfolio Website",
-      description: "Personal portfolio with HTML, CSS and JavaScript",
-      lastEdited: "2 hours ago",
-      language: "html",
-      favorite: true,
-    },
-    {
-      id: 2,
-      title: "Todo App",
-      description: "Simple todo application with local storage",
-      lastEdited: "Yesterday",
-      language: "javascript",
-      favorite: false,
-    },
-    {
-      id: 3,
-      title: "Responsive Dashboard",
-      description: "Admin dashboard with responsive design",
-      lastEdited: "3 days ago",
-      language: "css",
-      favorite: true,
-    },
-    {
-      id: 4,
-      title: "Landing Page",
-      description: "Product landing page with animations",
-      lastEdited: "1 week ago",
-      language: "html",
-      favorite: false,
-    },
-    {
-      id: 5,
-      title: "Image Gallery",
-      description: "Dynamic image gallery with filtering",
-      lastEdited: "2 weeks ago",
-      language: "javascript",
-      favorite: false,
-    },
-
-  ])
+  const [projects, setProjects] = useState([]);
+  const [error, setError] = useState(null);
 
 const [showModal, setShowModal] = useState(false);
 
   const toggleFavorite = (id) => {
     setProjects(projects.map((project) => (project.id === id ? { ...project, favorite: !project.favorite } : project)))
   }
+
+  const dateConvert = (date) => {
+    const newDate = new Date(date);
+    const day = newDate.getDate();
+    const month = newDate.getMonth() + 1;
+    const year = newDate.getFullYear();
+    const hours = newDate.getHours();
+    const minutes = newDate.getMinutes();
+    return `${day}/${month}/${year} ${hours}:${minutes}`
+  }
+
+
+  const deleteProjcct = async(id) => {
+    try{
+      const res = await fetch(`${API_BASE_URL}deleteProject/${id}`, {
+        method: "DELETE",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if(data.success){
+        getProjects();
+        toast.success(data.message);
+      }else{
+        setError(data.message);
+      }
+    }
+    catch(error){
+      setError("Server Error Occured", error);
+    }
+    }
+  
+
+  const getProjects = async () => {
+    try {
+      const response = await fetch(API_BASE_URL + "getProjects", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: localStorage.getItem("userId") }),
+      });
+      const data = await response.json();
+      if (data.success) {
+        // Map the projects data immediately after receiving it
+        const mappedData = data.projects.map((project) => ({
+          id: project._id,
+          title: project.title,
+          description: project.description || "Personal portfolio with HTML, CSS and JavaScript",
+          lastEdited: project.updated_at || "2 hours ago",
+          language: project.language || "html",
+          favorite: project.favorite || false,
+        }));
+        console.log("here is the mapped data", mappedData);
+        setProjects(mappedData);
+      } else {
+        setError(data.message);
+      }
+  }
+  catch (error) {
+    console.error("Error fetching user data:", error);
+    setError("Server Error Occured");
+  }
+  }
+
+  useEffect(() => {
+    getProjects();
+  }, []);
+
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -87,7 +120,7 @@ const [showModal, setShowModal] = useState(false);
             className={`p-4 border-b border-sky-900/30 flex justify-between items-center bg-gradient-to-r from-slate-900/50 to-transparent`}
           >
             <div className="flex items-center gap-2">
-              <LanguageIcon language={project.language} />
+              <LanguageIcon language={project.language || "html,css,javascript"} />
               <h3 className="font-medium text-white">{project.title}</h3>
             </div>
             <div className="flex items-center gap-2">
@@ -114,7 +147,7 @@ const [showModal, setShowModal] = useState(false);
             <div className="flex justify-between items-center text-xs text-gray-500">
               <span className="flex items-center gap-1">
                 <Icon icon="mingcute:time-line" width="14" height="14" />
-                {project.lastEdited}
+                {project?.lastEdited && dateConvert(project.lastEdited)}
               </span>
               <div className="flex gap-2">
                 <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
@@ -123,7 +156,7 @@ const [showModal, setShowModal] = useState(false);
                 <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
                   <Icon icon="mingcute:copy-fill" width="16" height="16" />
                 </button>
-                <button className="p-1.5 rounded-md hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 transform hover:-translate-y-0.5">
+                <button onClick={() => deleteProjcct(project.id)} className="p-1.5 rounded-md hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 transform hover:-translate-y-0.5">
                   <Icon icon="mingcute:delete-fill" width="16" height="16" />
                 </button>
               </div>
