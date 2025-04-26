@@ -3,16 +3,19 @@ import { ShinyButton } from './Button'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useNavigate } from 'react-router-dom'
 import { API_BASE_URL } from '../../helper'
+import { useContext } from 'react'
+import { ProjectContext } from '../context/ProjectContext'
 import toast from 'react-hot-toast'
 
 const CreateModel = () => {
   const [title, setTitle] = React.useState("")
   const nav = useNavigate();
   const userID = localStorage.getItem("userId");
+  const { refreshProject } = useContext(ProjectContext);
 
   const createProject = async (e) => {
     e.preventDefault()
-        if (!title || title.trim() === "") {
+    if (!title || title.trim() === "") {
       toast.error("Please enter a project title");
       return;
     }
@@ -31,6 +34,7 @@ const CreateModel = () => {
         toast('Project Created', {
           icon: '👏',
         });
+        refreshProject();
         nav("/editor/" + data.projectId)
       } else {
         toast.error(data.message);

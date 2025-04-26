@@ -5,13 +5,13 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("isLoggedIn"));
 
+
     const login = (token, userId) => {
         localStorage.setItem("token", token);
         localStorage.setItem("userId", userId);
         localStorage.setItem("isLoggedIn", true);
         setIsLoggedIn(true);
     };
-
     // Here is some authentiocation
 
     // const getProducts = async () => {
@@ -56,7 +56,7 @@ export const AuthProvider = ({ children }) => {
     
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, login, logout }}>{children}</AuthContext.Provider>
+        <AuthContext.Provider value={{ isLoggedIn, login, logout}}>{children}</AuthContext.Provider>
     );
 };
 

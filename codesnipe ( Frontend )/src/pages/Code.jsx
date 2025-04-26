@@ -2,50 +2,58 @@
 
 import { useState } from "react"
 import { Icon } from "@iconify/react/dist/iconify.js"
+import { useContext } from "react"
+import { ProjectContext } from "../context/ProjectContext"
+import CreateModel from "../components/CreateModel"
+import Modal from "../components/Modal"
 
 export default function CreateProject() {
   const [searchQuery, setSearchQuery] = useState("")
+  // console.log(useProject(localStorage.getItem("userId")));
+  const { projects } = useContext(ProjectContext)
+  const [show, setShow] = useState(false)
 
   const templates = [
     {
       id: 1,
-      name: "React App",
+      name: "Html, CSS, JavaScript",
       icon: <Icon icon="logos:react" width="24" height="24" />,
-      description: "Create a new React application",
+      description: "Create a new Html, CSS, JavaScript App",
       stars: 4.8,
     },
     {
       id: 2,
-      name: "Next.js Project",
+      name: "JavaScript",
       icon: <Icon icon="logos:nextjs-icon" width="24" height="24" />,
-      description: "Start with a Next.js template",
+      description: "Start with a JavaScript template",
       stars: 4.9,
     },
     {
       id: 3,
-      name: "Node.js API",
+      name: "Java",
       icon: <Icon icon="logos:nodejs-icon" width="24" height="24" />,
-      description: "Build a Node.js backend API",
+      description: "Start with Java",
       stars: 4.7,
     },
     {
       id: 4,
-      name: "Git Repository",
+      name: "Python",
       icon: <Icon icon="mdi:git" width="24" height="24" color="#F05032" />,
-      description: "Clone from an existing repository",
+      description: "Create a app with Python",
       stars: 4.5,
     },
   ]
 
-  const recentProjects = [
-    { id: 1, name: "personal-website", lastEdited: "2 hours ago" },
-    { id: 2, name: "todo-app", lastEdited: "Yesterday" },
-    { id: 3, name: "portfolio", lastEdited: "3 days ago" },
-  ]
-
   return (
     <div className="w-full min-h-screen bg-black text-white">
-      <div className="max-w-4xl mx-auto p-6 space-y-8">
+      {
+        show &&
+          <Modal setShow={setShow} >
+            <CreateModel />
+          </Modal>
+      }
+
+      <div className="max-w-4xl mx-auto p-6 space-y-8" onClick={() => setShow(true)}>
         {/* Header */}
         <div className="space-y-2">
           <h1 className="text-3xl font-bold">Create New Project</h1>
@@ -66,7 +74,7 @@ export default function CreateProject() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-        {/* Changes in the Create New Project */}
+          {/* Changes in the Create New Project */}
           <button className="w-full md:w-[20rem] flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors">
             <Icon icon="ic:baseline-plus" width="20" height="20" />
             <span>Create New Project</span>
@@ -112,12 +120,11 @@ export default function CreateProject() {
         <div className="space-y-4">
           <h2 className="text-xl font-semibold">Recent Projects</h2>
           <div className="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
-            {recentProjects.map((project, index) => (
+            {projects.map((project, index) => (
               <div
                 key={project.id}
-                className={`flex items-center justify-between p-4 hover:bg-gray-800 cursor-pointer ${
-                  index !== recentProjects.length - 1 ? "border-b border-gray-700" : ""
-                }`}
+                className={`flex items-center justify-between p-4 hover:bg-gray-800 cursor-pointer ${index !== projects.length - 1 ? "border-b border-gray-700" : ""
+                  }`}
               >
                 <div className="flex items-center gap-3">
                   <Icon icon="mdi:file-code-outline" width="20" height="20" color="#94a3b8" />
@@ -125,7 +132,7 @@ export default function CreateProject() {
                 </div>
                 <div className="flex items-center text-sm text-gray-400">
                   <Icon icon="mdi:clock-outline" width="16" height="16" color="#94a3b8" className="mr-1" />
-                  <span>{project.lastEdited}</span>
+                  <span>{project.update && new Date(project.update).toLocaleDateString()}</span>
                 </div>
               </div>
             ))}

@@ -91,7 +91,7 @@ export default function ListCard() {
 }
     <div className="bg-[#050a1f] backdrop-blur-sm border border-sky-900/30 rounded-xl overflow-hidden hover:shadow-lg hover:shadow-sky-600/10 transition-all duration-300">
       {/* Create New Project Row */}
-      <div className="border-b border-sky-900/30 hover:bg-slate-700/50 transition-colors duration-300 cursor-pointer group">
+      <div onClick={() => setShow(true)} className="border-b border-sky-900/30 hover:bg-slate-700/50 transition-colors duration-300 cursor-pointer group">
         <div className="p-4 flex items-center gap-4">
           <div className="w-10 h-10 rounded-full bg-sky-600/10 flex items-center justify-center group-hover:bg-sky-600/20 transition-colors duration-300">
             <Icon
@@ -101,7 +101,7 @@ export default function ListCard() {
               height="20"
             />
           </div>
-          <div onClick={() => setShow(true)}>
+          <div>
             <h3 className="font-medium text-white">Create New Project</h3>
             <p className="text-gray-400 text-sm">Start coding with HTML, CSS, and JavaScript</p>
           </div>
