@@ -6,11 +6,12 @@ import Modal from "../components/Modal"
 import CreateModel from "../components/CreateModel"
 import { API_BASE_URL } from "../../helper"
 import toast from "react-hot-toast"
+import { useNavigate } from "react-router-dom"
 
 export default function GridCard() {
   const [projects, setProjects] = useState([]);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
 const [showModal, setShowModal] = useState(false);
 
   const toggleFavorite = (id) => {
@@ -112,6 +113,7 @@ const [showModal, setShowModal] = useState(false);
       {/* Project Cards */}
       {projects.map((project) => (
         <div
+          onClick={() => navigate(`/editor/${project.id}`)}
           key={project.id}
           className="group bg-[#050a1f] backdrop-blur-sm border border-sky-900/30 rounded-xl overflow-hidden hover:border-sky-600 hover:shadow-lg hover:shadow-sky-600/10 transition-all duration-300"
         >

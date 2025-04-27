@@ -43,8 +43,6 @@ const CreateModel = () => {
       toast.error("Error Creating Project");
     }
   }
-
-  // Added Toast
     
   return (
     <form onSubmit={createProject} className='w-[25rem] h-fit border-gray-800 border-2 bg-[#0d1631] rounded-lg p-6 flex flex-col gap-4 justify-start'>

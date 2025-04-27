@@ -5,15 +5,15 @@ import { useCallback, useEffect, useState } from "react"
 import { API_BASE_URL } from "../../helper"
 import CreateModel from "./CreateModel";
 import Modal from "./Modal";
-import { div } from "motion/react-client";
-import { Diff } from "lucide-react";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 export default function ListCard() {
   // Sample project data - in a real app, this would come from your database
 
   const [error, setError] = useState(null);
   const [projects, setProjects] = useState([]);
   const [show, setShow ] = useState(false);
+  const navigate = useNavigate();
   const getProjects = async () => {
     try {
       const response = await fetch(API_BASE_URL + "getProjects", {
@@ -118,6 +118,7 @@ export default function ListCard() {
 
       {projects.map((project, index) => (
         <div
+          onClick={() => navigate(`/editor/${project.id}`)}
           key={project.id}
           className={`border-b border-sky-900/30 last:border-b-0 hover:bg-slate-700/30 transition-colors duration-300 group ${index % 2 === 0 ? "bg-slate-800/20" : "bg-slate-800/10"}`}
         >
