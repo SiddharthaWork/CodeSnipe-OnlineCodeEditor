@@ -130,8 +130,19 @@ router.patch("/updateProjects", async (req, res) => {
 })
 
 router.get("/getProject", async (req, res) => {
-  let { projectId } = req.query;
+  let { userId, projectId } = req.query;
   let project = await projectModel.findOne({ _id: projectId });
+  if (project) {
+    return res.json({ success: true, message: "Project Found", project: project })
+  }
+  else {
+    return res.json({ success: false, message: "Project Not Found" })
+  }
+})
+
+router.post("/getOneProject", async (req, res) => {
+  let { userId, projectId } = req.body;
+  let project = await projectModel.findOne({ _id: projectId, userId: userId });
   if (project) {
     return res.json({ success: true, message: "Project Found", project: project })
   }
@@ -160,5 +171,9 @@ router.put("/updateProject", async (req, res) => {
     return res.json({ success: false, message: "Project Not Found" })
   }
 })
+
+
+
+
 
 module.exports = router;

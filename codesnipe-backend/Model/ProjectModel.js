@@ -9,7 +9,7 @@ const projectSchema = new mongoose.Schema({
     userId: String,
     htmlCode: {
         type: String,
-        default: "<h1>Hello World</h1>"
+        default: "<h1>Namaste World</h1>"
     },
     cssCode: {
         type: String,
