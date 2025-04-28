@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
         return res.json({ success: false, message: "Something went wrong" })
       }
       if (result) {
-        let token = jwt.sign({ email: user.email, userId: user._id }, secret);
+        let token = jwt.sign({ email: user.email, userId: user._id }, ysecret);
         return res.json({ success: true, message: "Login Successfully", token: token, userId: user._id })
       }
       else {
@@ -147,6 +147,17 @@ router.get("/getAllProjects", async (req, res) => {
   }
   else {
     return res.json({ success: false, message: "Projects Not Found" })
+  }
+})
+
+router.put("/updateProject", async (req, res) => {
+  let { projectId, title, htmlcode, csscode, jscode, others } = req.body;
+  let project = await projectModel.findOneAndUpdate({ _id: projectId }, { title: title }, { htmlCode: htmlcode }, { cssCode: csscode }, { jsCode: jscode }, { others: others });
+  if (project) {
+    return res.json({ success: true, message: "Project Updated Successfully" })
+  }
+  else {
+    return res.json({ success: false, message: "Project Not Found" })
   }
 })
 
