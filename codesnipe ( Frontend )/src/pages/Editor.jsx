@@ -2,47 +2,96 @@ import React, { useEffect, useState, useRef } from 'react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { Editor } from '@monaco-editor/react'
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '../components/Resizable'
+import { API_BASE_URL } from '../../helper'
+import { useParams } from 'react-router-dom'
+import toast from 'react-hot-toast'
+import { title } from 'motion/react-client'
 
 const EditorPage = () => {
+
+  const {projectid} = useParams();
+
   const [htmlCode, setHtmlCode] = useState('<div>hello world</div>');
   const [cssCode, setCssCode] = useState('* {\n  background-color: white;\n  color: black;\n}');
   const [jsCode, setJsCode] = useState('console.log(\'Hello World\');');
-  const timeoutRef = useRef(null);
   const iframeRef = useRef(null);
 
-  const execute = () => {
-    if (iframeRef.current) {
-      const html = htmlCode;
-      const css = `<style>${cssCode}</style>`;
-      const js = `<script>${jsCode}</script>`;
-      iframeRef.current.srcdoc = html + css + js;
-    }
-  }
-  const debouncedExecute = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
-    timeoutRef.current = setTimeout(() => {
-      execute();
-    }, 100);
-  }
+  const generateSrcDoc = () => {
+    return `
+      <html>
+        <head>
+          <style>${cssCode}</style>
+        </head>
+        <body>${htmlCode}</body>
+        <script>${jsCode}</script>
+      </html>
+    `;
+  };
 
   const handleCodeChange = (setter) => (value) => {
     setter(value);
-    debouncedExecute();
-  }
+  };
 
   useEffect(() => {
     iframeRef.current = document.getElementById("iframe");
-    execute();
-
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
   }, []);
+
+  useEffect(() => {
+    if (iframeRef.current) {
+      iframeRef.current.srcdoc = generateSrcDoc();
+    }
+  }, [htmlCode, cssCode, jsCode]);
+
+
+
+  const getCode = async () => {
+    try{
+      const res = await fetch( `${API_BASE_URL}getOneProject`, {
+        method: "POST",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: localStorage.getItem("userId"),
+        projectId: projectid,
+      }),
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      // Ensure projects is always an array
+      // const projectsArray = data.projects || [data.project];
+    
+      // const mapping = projectsArray.map((project) => ({
+      //   title: project.title,
+      //   html: project.htmlCode,
+      //   css: project.cssCode,
+      //   js: project.jsCode,
+      // }));
+    
+      // console.log("Mapped projects:", mapping);
+    
+      // Set the first project's code
+      setHtmlCode(data?.project.htmlCode);
+      setCssCode(data?.project.cssCode);
+      setJsCode(data?.project.jsCode);
+    }
+    else{
+      console.log("here is some ",data.message);
+    }
+
+    }
+    catch(error){
+      // toast.error("Server Error Occured");
+      console.error("Error saving code:", error);
+    }
+  }
+
+
+  useEffect(() => {
+    getCode();
+  },[])
 
   return (
     <div className='w-full h-[90vh] bg-white/5 flex flex-col overflow-hidden'>
@@ -111,9 +160,6 @@ const EditorPage = () => {
                 <div className='bg-[#1d1e22] relative p-2 w-fit h-fit border-t-2 border-white/50 flex gap-1 items-center'>
                   <Icon icon="vscode-icons:file-type-js" width="24" height="24" />
                   <h1 className='font-kanit text-2xl'>Javascript</h1>
-                  {/* <div className='absolute top-2 -right-[24rem] rounded-full w-fit h-fit cursor-pointer'>
-                    <Icon icon="ic:sharp-flip" width="24" height="24" />
-                  </div> */}
                 </div>
                 <div className='bg-[#1d1e22] p-2 w-full h-full border-white/15 border-r-2'>
                   <Editor
