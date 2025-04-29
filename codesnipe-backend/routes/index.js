@@ -118,17 +118,6 @@ router.delete("/deleteProject/:projectId", async (req, res) => {
 });
 
 
-router.patch("/updateProjects", async (req, res) => {
-  let { projectId, title } = req.body;
-  let project = await projectModel.findOneAndUpdate({ _id: projectId }, { title: title });
-  if (project) {
-    return res.json({ success: true, message: "Project Updated Successfully" })
-  }
-  else {
-    return res.json({ success: false, message: "Project Not Found" })
-  }
-})
-
 router.get("/getProject", async (req, res) => {
   let { userId, projectId } = req.query;
   let project = await projectModel.findOne({ _id: projectId });
@@ -150,6 +139,33 @@ router.post("/getOneProject", async (req, res) => {
     return res.json({ success: false, message: "Project Not Found" })
   }
 })
+
+router.post("/updateProject", async (req, res) => {
+  const { projectId, userId, htmlcode, csscode, jscode } = req.body;
+
+  const user = await userModel.findOne({ _id: userId });
+
+  if (user) {
+    const project = await projectModel.findOneAndUpdate(
+      { _id: projectId },
+      {
+        htmlCode: htmlcode,
+        cssCode: csscode,
+        jsCode: jscode
+      },
+      { new: true }
+    );
+
+    if (project) {
+      return res.json({ success: true, message: "Project Updated Successfully" });
+    } else {
+      return res.json({ success: false, message: "Project Not Found" });
+    }
+  } else {
+    return res.json({ success: false, message: "User Not Found" });
+  }
+});
+
 
 router.get("/getAllProjects", async (req, res) => {
   let projects = await projectModel.find();
