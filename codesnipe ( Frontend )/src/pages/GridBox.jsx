@@ -159,7 +159,7 @@ const [showModal, setShowModal] = useState(false);
                   <Icon icon="mingcute:copy-fill" width="16" height="16" />
                 </button>
                 <button onClick={() => deleteProjcct(project.id)} className="p-1.5 rounded-md hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 transform hover:-translate-y-0.5">
-s                  <Icon icon="mingcute:delete-fill" width="16" height="16" />
+              <Icon icon="mingcute:delete-fill" width="16" height="16" />
                 </button>
               </div>
             </div>

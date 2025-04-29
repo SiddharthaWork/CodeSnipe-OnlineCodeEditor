@@ -15,7 +15,55 @@ const EditorPage = () => {
   const [cssCode, setCssCode] = useState('* {\n  background-color: white;\n  color: black;\n}');
   const [jsCode, setJsCode] = useState('console.log(\'Hello World\');');
   const iframeRef = useRef(null);
+  
+  const updateCode = async () => {
+    try{
+      const res = await fetch( `${API_BASE_URL}updateProject`, {
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: localStorage.getItem("userId"),
+          projectId: projectid,
+          htmlcode: htmlCode, 
+          csscode: cssCode,
+          jscode: jsCode
+        }),
+      });
+    
+      const data = await res.json();
+      if(data.success){
+        toast.success("Saved Successfully");
+        console.log(data.message);
+      }
+      else{
+        toast.error(data.message);
+        console.log(data.message);
+      }
+    }
+    catch(error){
+      console.log(error);
+    }
+  }
 
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if(event.ctrlKey && event.key === 's'){
+        event.preventDefault();
+        // console.log("Key is pressed");
+        updateCode();
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown);
+
+    return() => 
+    {
+      window.removeEventListener('keydown',handleKeyDown);
+    }
+  })
   const generateSrcDoc = () => {
     return `
       <html>
@@ -27,6 +75,7 @@ const EditorPage = () => {
       </html>
     `;
   };
+  
 
   const handleCodeChange = (setter) => (value) => {
     setter(value);
@@ -60,19 +109,7 @@ const EditorPage = () => {
 
     const data = await res.json();
     if (data.success) {
-      // Ensure projects is always an array
-      // const projectsArray = data.projects || [data.project];
-    
-      // const mapping = projectsArray.map((project) => ({
-      //   title: project.title,
-      //   html: project.htmlCode,
-      //   css: project.cssCode,
-      //   js: project.jsCode,
-      // }));
-    
-      // console.log("Mapped projects:", mapping);
-    
-      // Set the first project's code
+
       setHtmlCode(data?.project.htmlCode);
       setCssCode(data?.project.cssCode);
       setJsCode(data?.project.jsCode);
