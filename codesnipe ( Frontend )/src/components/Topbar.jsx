@@ -9,20 +9,22 @@ import { cn } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import Modal from "./Modal";
+import CreateModel from "./CreateModel";
 export const FloatingNav = ({
   navItems,
   className
 }) => {
   const { scrollY } = useScroll();
-  const nav = useNavigate();
   const [visible, setVisible] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);
+  const [show, setShow] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (current) => {
     if (typeof current === "number") {
       const isScrollingDown = current > lastScroll;
       setLastScroll(current);
-      
+
       // Always show when at top
       if (current < 100) {
         setVisible(true);
@@ -33,7 +35,13 @@ export const FloatingNav = ({
   });
 
   return (
-    (<AnimatePresence mode="wait">
+    <>
+    {show && (      
+    <Modal setShow={setShow}>
+      <CreateModel/>
+      </Modal>
+    )}
+    <AnimatePresence mode="wait">
       <motion.div
         initial={{
           opacity: 1,
@@ -52,7 +60,7 @@ export const FloatingNav = ({
         )}>
         {navItems.map((navItem, idx) => (
           <Link
-          key={`link=${idx}`}
+            key={`link=${idx}`}
             to={navItem.link}
             className={cn(
               "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
@@ -62,7 +70,7 @@ export const FloatingNav = ({
           </Link>
         ))}
         <button
-      onClick={() => nav("/editor/100")}
+          onClick={() => setShow(true)}
           className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full flex items-center space-x-2">
           <span>Code</span>
           <Icon icon="tdesign:code" className="w-5 h-5" />
@@ -70,6 +78,7 @@ export const FloatingNav = ({
             className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent  h-px" />
         </button>
       </motion.div>
-    </AnimatePresence>)
+    </AnimatePresence>
+    </>
   );
 };
