@@ -128,7 +128,7 @@ const EditorPage = () => {
   // Fetch code on component mount
   useEffect(() => {
     getCode();
-  }, [projectid]);
+  }, [projectid]); 
 
   const SkeletonLoader = () => (
     <div className="animate-pulse h-full w-full bg-[#1e1e1e] rounded">
