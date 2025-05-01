@@ -13,6 +13,7 @@
     "@monaco-editor/react": "^4.7.0",
     "@tabler/icons-react": "^3.31.0",
     "clsx": "^2.1.1",
+    "html2canvas": "^1.4.1",
     "lucide-react": "^0.487.0",
     "motion": "^12.5.0",
     "react": "^18.3.1",
