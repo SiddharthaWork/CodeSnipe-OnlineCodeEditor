@@ -118,12 +118,11 @@ export default function ListCard() {
 
       {projects.map((project, index) => (
         <div
-          onClick={() => navigate(`/editor/${project.id}`)}
           key={project.id}
           className={`border-b border-sky-900/30 last:border-b-0 hover:bg-slate-700/30 transition-colors duration-300 group ${index % 2 === 0 ? "bg-slate-800/20" : "bg-slate-800/10"}`}
         >
           {/* Mobile View */}
-          <div className="md:hidden p-4">
+          <div className="md:hidden p-4" onClick={() => navigate(`/editor/${project.id}`)}>
             <div className="flex justify-between items-start mb-2">
               <div className="flex items-center gap-2">
                 <div className={`w-1 h-8 rounded-full ${getLanguageColor(project.language)}`}></div>
@@ -146,7 +145,7 @@ export default function ListCard() {
             <div className="flex justify-between items-center pl-7">
               <span className="text-xs text-gray-500 flex items-center gap-1">
                 <Icon icon="mingcute:time-line" width="14" height="14" />
-                {project.lastEdited}
+                {new Date(project.updatedAt).toDateString()}
               </span>
               <div className="flex gap-2">
                 <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
@@ -164,12 +163,15 @@ export default function ListCard() {
 
           {/* Desktop View */}
           <div className="hidden md:grid grid-cols-12 gap-4 p-4 items-center group">
-            <div className="col-span-5">
+            <div onClick={() => navigate(`/editor/${project.id}`)} className="col-span-5 cursor-pointer">
               <div className="flex items-center gap-3">
                 <div className={`w-1 h-8 rounded-full ${getLanguageColor(project.language)}`}></div>
                 <button
+
                   className={`text-gray-400 hover:text-sky-400 transition-colors ${project.favorite ? "text-sky-400" : ""}`}
-                  onClick={() => toggleFavorite(project.id)}
+                  onClick={(s) =>{
+                    s.stopPropagation();
+                    toggleFavorite(project.id)}}
                 >
                   <Icon
                     icon={project.favorite ? "mingcute:star-fill" : "mingcute:star-line"}
@@ -185,13 +187,13 @@ export default function ListCard() {
             <div className="col-span-3 text-gray-400 text-sm truncate">{project.description}</div>
             <div className="col-span-2 text-gray-500 text-sm flex items-center gap-1">
               <Icon icon="mingcute:time-line" className="opacity-70" width="14" height="14" />
-              {project.lastEdited}
+              {new Date(project.lastEdited).toDateString()}
             </div>
             <div className="col-span-2 flex justify-end gap-2 opacity-100 group-hover:opacity-100 transition-opacity duration-300">
               <button className="p-1.5 rounded-md bg-sky-600 hover:bg-sky-500 text-white transition-all duration-200">
                 <Icon icon="mingcute:edit-line" width="18" height="18" />
               </button>
-              <button className="p-1.5 rounded-md bg-slate-700 hover:bg-slate-600 text-white transition-all duration-200">
+              <button onClick={() => navigate(`/editor/${project.id}`)} className="p-1.5 rounded-md bg-slate-700 hover:bg-slate-600 text-white transition-all duration-200">
                 <Icon icon="mingcute:eye-line" width="18" height="18" />
               </button>
               <button onClick={() => deleteProject(project.id)} className="p-1.5 rounded-md bg-red-900/50 hover:bg-red-900 text-white transition-all duration-200">

@@ -18,17 +18,6 @@ const [showModal, setShowModal] = useState(false);
     setProjects(projects.map((project) => (project.id === id ? { ...project, favorite: !project.favorite } : project)))
   }
 
-  const dateConvert = (date) => {
-    const newDate = new Date(date);
-    const day = newDate.getDate();
-    const month = newDate.getMonth() + 1;
-    const year = newDate.getFullYear();
-    const hours = newDate.getHours();
-    const minutes = newDate.getMinutes();
-    return `${day}/${month}/${year} ${hours}:${minutes}`
-  }
-
-
   const deleteProjcct = async(id) => {
     try{
       const res = await fetch(`${API_BASE_URL}deleteProject/${id}`, {
@@ -149,7 +138,7 @@ const [showModal, setShowModal] = useState(false);
             <div className="flex justify-between items-center text-xs text-gray-500">
               <span className="flex items-center gap-1">
                 <Icon icon="mingcute:time-line" width="14" height="14" />
-                {project?.lastEdited && dateConvert(project.lastEdited)}
+                {new Date(project.lastEdited).toLocaleString()}
               </span>
               <div className="flex gap-2">
                 <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">

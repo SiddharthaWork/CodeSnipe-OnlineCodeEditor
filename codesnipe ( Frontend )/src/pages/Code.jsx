@@ -1,17 +1,34 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Icon } from "@iconify/react/dist/iconify.js"
 import { useContext } from "react"
 import { ProjectContext } from "../context/ProjectContext"
 import CreateModel from "../components/CreateModel"
 import Modal from "../components/Modal"
+import ListCard from "../components/ListCard"
+import GridBox from './GridBox';
+import { useNavigate } from "react-router-dom"
 
 export default function CreateProject() {
+  const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState("")
-  // console.log(useProject(localStorage.getItem("userId")));
   const { projects } = useContext(ProjectContext)
   const [show, setShow] = useState(false)
+  const [layout, setLayout] = useState("listview");
+  const [filter, setFilter] = useState([]);
+
+  const filteredProjects = projects.filter((project) => 
+    project.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  useEffect(() => {
+    setFilter(filteredProjects);
+  }, [searchQuery, projects]);
+
+  const handleProjectClick = (projectId) => {
+    navigate(`/editor/${projectId}`);
+  }
 
   const templates = [
     {
@@ -46,14 +63,13 @@ export default function CreateProject() {
 
   return (
     <div className="w-full min-h-screen bg-black text-white">
-      {
-        show &&
-          <Modal setShow={setShow} >
-            <CreateModel />
-          </Modal>
-      }
-
-      <div className="max-w-4xl mx-auto p-6 space-y-8" onClick={() => setShow(true)}>
+      {show && (
+        <Modal setShow={setShow}>
+          <CreateModel />
+        </Modal>
+      )}
+      
+      <div className="max-w-8xl mx-[6rem] p-6 space-y-8">
         {/* Header */}
         <div className="space-y-2">
           <h1 className="text-3xl font-bold">Create New Project</h1>
@@ -62,20 +78,44 @@ export default function CreateProject() {
 
         {/* Search and Create Button Row */}
         <div className="flex flex-col md:flex-row gap-4 items-center">
-          <div className="relative w-full">
+          <div onClick={(e) => e.stopPropagation()} className="relative w-full">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <Icon icon="mingcute:search-3-line" width="20" height="20" color="#94a3b8" />
             </div>
             <input
               type="text"
-              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-700 bg-gray-900 text-white focus:outline-none focus:ring-2 focus:ring-sky-600 transition-all"
+              className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-white/20 text-white bg-[#050a1f] focus:outline-none focus:ring-2 focus:ring-sky-600 transition-all"
               placeholder="Search templates or type a project name"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
+            {searchQuery && filter.length > 0 && (
+              <div className="absolute w-full mt-2 bg-[#050a1f] border border-gray-700 rounded-xl p-2 max-h-96 overflow-y-auto z-50">
+                {filter.map((project) => (
+                  <div 
+                    key={project.id} 
+                    className="p-4 mb-2 cursor-pointer hover:bg-gray-800 rounded-lg transition-colors"
+                    onClick={() => handleProjectClick(project.id)}
+                  >
+                    <h3 className="text-sky-400 font-semibold">{project.name}</h3>
+                    <p className="text-white text-sm">{project.description || "Personal portfolio with HTML, CSS and JavaScript"}</p>
+                    <div className="flex items-center gap-2 mt-2">
+                      <span className="text-gray-500 text-xs">{project.language || "Html"}</span>
+                      <span className="text-gray-500 text-xs">•</span>
+                      <span className="text-gray-500 text-xs">
+                        {new Date(project.update).toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
-          {/* Changes in the Create New Project */}
-          <button className="w-full md:w-[20rem] flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors">
+          
+          <button 
+            onClick={() => setShow(true)}
+            className="w-full md:w-[20rem] flex items-center justify-center gap-2 bg-sky-600 hover:bg-sky-700 text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
+          >
             <Icon icon="ic:baseline-plus" width="20" height="20" />
             <span>Create New Project</span>
           </button>
@@ -88,7 +128,7 @@ export default function CreateProject() {
             {templates.map((template) => (
               <div
                 key={template.id}
-                className="p-4 bg-gray-900 rounded-xl border border-gray-700 hover:shadow-md transition-shadow cursor-pointer"
+                className="p-4 bg-[#050a1f]  rounded-xl border border-gray-700 hover:shadow-md transition-shadow cursor-pointer"
               >
                 <div className="flex items-start gap-3">
                   <div className="p-2 bg-gray-800 rounded-lg">{template.icon}</div>
@@ -117,7 +157,7 @@ export default function CreateProject() {
         </div>
 
         {/* Recent Projects Section */}
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           <h2 className="text-xl font-semibold">Recent Projects</h2>
           <div className="bg-gray-900 rounded-xl border border-gray-700 overflow-hidden">
             {projects.map((project, index) => (
@@ -137,7 +177,37 @@ export default function CreateProject() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-2xl font-semibold text-white">Your Projects</h1>
+          </div>
+
+
+        <div className="flex items-center bg-[#0d1631] rounded-lg p-1 border border-sky-900/30">
+                <button
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${layout === "listview" ? "bg-sky-600 text-white" : "text-gray-400 hover:text-white"}`}
+                  onClick={() => setLayout("listview")}
+                >
+                  <Icon icon="mingcute:list-check-fill" width="20" height="20" />
+                  <span className="hidden sm:inline">List</span>
+                </button>
+                <button
+                  className={`flex items-center gap-2 px-3 py-2 rounded-md transition-colors ${layout === "gridview" ? "bg-sky-600 text-white" : "text-gray-400 hover:text-white"}`}
+                  onClick={() => setLayout("gridview")}
+                >
+                  <Icon icon="mingcute:grid-fill" width="20" height="20" />
+                  <span className="hidden sm:inline">Grid</span>
+                </button>
+              </div>
+              </div>
+
+        <div className="w-full">
+              {layout === "gridview" && <GridBox/>}
+              {layout === "listview" && <ListCard />}
+            </div>
+
+
       </div>
     </div>
   )
