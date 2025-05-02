@@ -5,6 +5,7 @@ import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from '../compone
 import { API_BASE_URL } from '../../helper'
 import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
+import html2canvas from 'html2canvas'
 
 const EditorPage = () => {
   const { projectid } = useParams();
@@ -15,6 +16,114 @@ const EditorPage = () => {
   const [loading, setLoading] = useState(true);
   const [dataFetched, setDataFetched] = useState(false);
   const iframeRef = useRef(null);
+  
+  const saveScreenshot = async () => {
+    try {
+      // Get the iframe element
+      const iframe = document.getElementById('iframe');
+      if (!iframe) {
+        toast.error('Iframe not found');
+        return;
+      }
+
+      // Access iframe content
+      let iframeDoc;
+      try {
+        iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        console.log('Successfully accessed iframe document');
+      } catch (accessError) {
+        console.error('Cannot access iframe content:', accessError);
+        toast.error('Cannot access iframe content - security restriction');
+        return;
+      }
+
+      // Wait for any animations or rendering to complete
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      // Use html2canvas with proper settings
+      const screenshotCanvas = await html2canvas(iframeDoc.body, {
+        allowTaint: true,
+        useCORS: true,
+        scale: 1,
+        logging: false,
+        ignoreElements: (element) => {
+          // Ignore elements that might cause issues (optional)
+          return false;
+        }
+      });
+
+      // Convert canvas to a data URL and then to a Blob
+      screenshotCanvas.toBlob(async (blob) => {
+        if (!blob) {
+          toast.error('Failed to create image');
+          return;
+        }
+
+        // Create form data
+        const formData = new FormData();
+        formData.append('name', 'Project Screenshot');
+        formData.append('projectId', projectid);
+        formData.append('userId', localStorage.getItem('userId'));
+        // Change 'image' to 'photo' to match the backend multer configuration
+        formData.append('photo', blob, 'project-screenshot.png');
+
+        try {
+          console.log('Uploading screenshot to:', 'http://localhost:3000/image/upload');
+          console.log('Form data fields:', 
+            Array.from(formData.entries()).map(entry => entry[0])
+          );
+          
+          // First check if an image already exists for this project
+          const checkResponse = await fetch(`http://localhost:3000/image/check/${projectid}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+          
+          const checkResult = await checkResponse.json();
+          let endpoint = 'http://localhost:3000/image/upload';
+          let method = 'POST';
+          
+          // If image exists, use update endpoint instead
+          if (checkResponse.ok && checkResult.exists && checkResult.imageId) {
+            endpoint = `http://localhost:3000/image/update/${checkResult.imageId}`;
+            method = 'PUT';
+            console.log('Updating existing image with ID:', checkResult.imageId);
+          } else {
+            console.log('Creating new image for project');
+          }
+          
+          // Upload or update the screenshot
+          const response = await fetch(endpoint, {
+            method: method,
+            body: formData,
+          });
+
+          // Handle response
+          if (!response.ok) {
+            console.error('Server error:', response.status);
+            toast.error(`Server error: ${response.status}`);
+            return;
+          }
+
+          const result = await response.json();
+          if (result.success) {
+            toast.success('Screenshot saved');
+          } else {
+            toast.error(result.message || 'Failed to save screenshot');
+          }
+        } catch (uploadError) {
+          console.error('Upload error:', uploadError);
+          toast.error('Failed to upload screenshot');
+        }
+      }, 'image/png', 0.9);
+
+    } catch (error) {
+      console.error('Screenshot error:', error);
+      toast.error('Failed to capture screenshot');
+    }
+  };
   
   const updateCode = async () => {
     try {
@@ -37,6 +146,9 @@ const EditorPage = () => {
       if(data.success){
         toast.success("Saved Successfully");
         console.log(data.message);
+        
+        // After saving the code, capture and save screenshot
+        await saveScreenshot();
       }
       else{
         toast.error(data.message);
@@ -259,8 +371,19 @@ const EditorPage = () => {
               id='iframe'
               className='w-full h-full bg-white'
               title="Preview"
-              sandbox="allow-scripts"
+              sandbox="allow-scripts allow-same-origin"
               srcDoc={generateSrcDoc()}
+              onLoad={() => {
+                if (iframeRef.current) {
+                  try {
+                    // Try to access the iframe content for testing purposes
+                    const doc = iframeRef.current.contentDocument || iframeRef.current.contentWindow.document;
+                    console.log('Iframe loaded and accessible');
+                  } catch (error) {
+                    console.error('Cannot access iframe content:', error);
+                  }
+                }
+              }}
             />
           )}
         </ResizablePanel>
