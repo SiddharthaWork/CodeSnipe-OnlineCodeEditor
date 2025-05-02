@@ -9,9 +9,9 @@ import Code from './pages/Code';
 import MainNavbar from './components/MainNavbar';
 import TopNavbar from './pages/TopNavbar';
 import EditorNavbar from './pages/EditorNavbar';
-import { div, path } from 'motion/react-client';
 import SearchPage from './pages/SearchPage';
 import SearchPractice from './pages/SearchPractice';
+import UploadForm from './pages/Upload';
 
 const ProtectedRoute = ({ children }) => {
   const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -48,7 +48,7 @@ function AppWrapper() {
       <main className='flex-1 w-full overflow-x-hidden mt-4'>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/search' element={<SearchPractice/>} />
+          <Route path='/search' element={<UploadForm/>} />
           {LoginProtection.map((
             { path, element }
           ) => (
