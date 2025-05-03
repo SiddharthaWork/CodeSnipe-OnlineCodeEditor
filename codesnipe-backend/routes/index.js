@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
         return res.json({ success: false, message: "Something went wrong" })
       }
       if (result) {
-        let token = jwt.sign({ email: user.email, userId: user._id }, ysecret);
+        let token = jwt.sign({ email: user.email, userId: user._id }, secret);
         return res.json({ success: true, message: "Login Successfully", token: token, userId: user._id })
       }
       else {

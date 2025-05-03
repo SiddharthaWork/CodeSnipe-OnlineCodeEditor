@@ -22,6 +22,10 @@ const projectSchema = new mongoose.Schema({
     isDeleted: {
         type: Boolean,
         default: false
+    },
+    imageId: {
+        type: String,
+        default: null
     }
 })
 
