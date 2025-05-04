@@ -25,6 +25,7 @@ export const ProjectProvider  = ({children}) => {
                     name: projects.title,
                     created: projects.created_at,
                     update: projects.updated_at,
+                    imageId: projects.imageId
                 }))
                 setProjects(projectMap);
             }

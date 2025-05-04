@@ -4,9 +4,8 @@ import { useState } from 'react';
 import GridCard from '../components/GridCard';
 import ListCard  from '../components/ListCard';
 import GridBox from './GridBox';
-import { ShinyButton } from '../components/Button';
 import Search from './(HomeComponents)/Search';
-import Modal from '../components/Modal';
+
 const Home = () => {
   const [layout, setLayout] = useState("listview");
   const [show,setShow] = useState(true)
@@ -50,18 +49,6 @@ const Home = () => {
             <h1 className='text-2xl font-bold ml-10'>Picked By <span className='text-sky-600'>CodeSnipe</span></h1>
               <GridCard />
       </div>
-      {/* <button onClick={() => setShow(!show)}>Onclick</button>
-    { show &&
-      <Modal setShow={setShow} >
-        <div className='text-white text-2xl'>
-        Namaste
-        </div>
-      </Modal>
-}
-
-   */}
-
-
     </div>
   )
 }

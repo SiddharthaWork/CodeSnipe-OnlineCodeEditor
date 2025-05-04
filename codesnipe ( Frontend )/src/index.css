@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --border: 20 5% 90%; /* Light gray for borders */
+    --ring: 215 20.2% 65.1%; /* Subtle blue for focus rings */
+  }
+}
+
 body{
     color: white;
     background-color: black;

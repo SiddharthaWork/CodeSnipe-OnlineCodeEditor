@@ -14,6 +14,10 @@ export default {
         montserrat: ['Montserrat', 'sans-serif'], // Add Montserrat
         openSans: ['Open Sans', 'sans-serif'], // Add Open Sans
       },
+      // colors: {
+      //   border: "hsl(var(--border))",
+      //   ring: "hsl(var(--ring))",
+      // },
     },
   },
   plugins: [],

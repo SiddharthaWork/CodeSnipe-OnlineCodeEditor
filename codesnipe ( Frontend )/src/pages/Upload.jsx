@@ -53,31 +53,49 @@ const UploadForm = () => {
 export default UploadForm;
 
 
+
 export const ImageGallery = () => {
-    const [images, setImages] = useState([]);
-  
-    useEffect(() => {
-      fetch("http://localhost:3000/image")
-        .then((res) => res.json())
-        .then((data) => setImages(data))
-        .catch((err) => console.error(err));
-    }, []);
-  
-    return (
-      <div>
-        <h2>Uploaded Images</h2>
-        {images.map((img) => (
-          <div key={img._id}>
-            <p>{img.name}</p>
-            <img
-              src={`http://localhost:3000/image/${img._id}`}
-              alt={img.name}
-              width="200"
-            />
-          </div>
-        ))}
-      </div>
-    );
-  };
-  
-  
+  const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:3000/image")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched data:", data);
+        if (Array.isArray(data)) {
+          setImages(data);
+        } else if (Array.isArray(data.images)) {
+          setImages(data.images);
+        } else {
+          throw new Error("Invalid data format");
+        }
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <div>
+      <h2>Uploaded Images</h2>
+      {images.map((img) => (
+        <div key={img._id}>
+          <p>{img.name}</p>
+          <img
+            src={`http://localhost:3000/image/${img._id}`}
+            alt={img.name}
+            width="200"
+          />
+        </div>
+      ))}
+    </div>
+  );
+};

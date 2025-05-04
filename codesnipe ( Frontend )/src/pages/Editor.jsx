@@ -15,6 +15,7 @@ const EditorPage = () => {
   const [jsCode, setJsCode] = useState('');
   const [loading, setLoading] = useState(true);
   const [dataFetched, setDataFetched] = useState(false);
+  const [title,setTitle] = useState('');
   const iframeRef = useRef(null);
   
   const saveScreenshot = async () => {
@@ -66,6 +67,7 @@ const EditorPage = () => {
         formData.append('userId', localStorage.getItem('userId'));
         // Change 'image' to 'photo' to match the backend multer configuration
         formData.append('photo', blob, 'project-screenshot.png');
+        formData.append('title', title);
 
         try {
           console.log('Uploading screenshot to:', 'http://localhost:3000/image/upload');
@@ -109,7 +111,19 @@ const EditorPage = () => {
 
           const result = await response.json();
           if (result.success) {
-            toast.success('Screenshot saved');
+            // toast.success('Screenshot saved');
+            toast.promise(
+              new Promise((resolve, reject) => {
+                setTimeout(() => {
+                  resolve('Screenshot saved');
+                },1000)
+              }),
+              {
+                loading: 'Saving output...',
+                success: 'Output Saved Successfully',
+                error: 'Failed to save screenshot'
+              }
+            );
           } else {
             toast.error(result.message || 'Failed to save screenshot');
           }
@@ -144,7 +158,7 @@ const EditorPage = () => {
     
       const data = await res.json();
       if(data.success){
-        toast.success("Saved Successfully");
+        // toast.success("Code Saved Successfully");
         console.log(data.message);
         
         // After saving the code, capture and save screenshot
@@ -224,6 +238,7 @@ const EditorPage = () => {
         setHtmlCode(data.project.htmlCode || '<div>hello world</div>');
         setCssCode(data.project.cssCode || '* {\n  background-color: white;\n  color: black;\n}');
         setJsCode(data.project.jsCode || 'console.log("Hello World");');
+        setTitle(data.project.title || "Untitled Project");
         setDataFetched(true);
       } else {
         toast.error(data.message || "Failed to load project");
