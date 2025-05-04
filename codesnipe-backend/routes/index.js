@@ -131,7 +131,7 @@ router.get("/getProject", async (req, res) => {
 
 router.post("/getOneProject", async (req, res) => {
   let { userId, projectId } = req.body;
-  let project = await projectModel.findOne({ _id: projectId, userId: userId });
+  let project = await projectModel.findOne({ _id: projectId});
   if (project) {
     return res.json({ success: true, message: "Project Found", project: project })
   }

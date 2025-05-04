@@ -16,6 +16,7 @@ router.post("/upload", upload.single("photo"), async (req, res) => {
       name: req.body.name,
       projectId: req.body.projectId,
       userId: req.body.userId,
+      title: req.body.title,
       image: {
         data: req.file.buffer,
         contentType: req.file.mimetype,
@@ -82,7 +83,6 @@ router.put("/update/:id", upload.single("photo"), async (req, res) => {
           data: req.file.buffer,
           contentType: req.file.mimetype
         },
-        // Don't update projectId or userId as they should remain the same
       },
       { new: true } // Return the updated document
     );
@@ -113,9 +113,22 @@ router.put("/update/:id", upload.single("photo"), async (req, res) => {
 // GET: Get all images
 router.get("/", async (req, res) => {
   try {
-    const images = await Image.find();
-    res.json({success: true, message: "Images fetched successfully", images: images});
+    // First find all projects that have an imageId set
+    const projectsWithImages = await Project.find({ imageId: { $ne: null } });
+    
+    // Extract the image IDs from these projects
+    const imageIds = projectsWithImages.map(project => project.imageId);
+    
+    // Find only those images that are referenced in projects
+    const images = await Image.find({ _id: { $in: imageIds } });
+    
+    res.json({
+      success: true, 
+      message: "Images fetched successfully", 
+      images: images
+    });
   } catch (err) {
+    console.error("Error fetching images:", err);
     res.status(500).json({ error: "Failed to fetch images" });
   }
 });
