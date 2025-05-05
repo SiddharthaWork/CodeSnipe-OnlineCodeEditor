@@ -144,10 +144,9 @@ const [showModal, setShowModal] = useState(false);
                 <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
                   <Icon icon="mingcute:edit-line" width="16" height="16" />
                 </button>
-                <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
-                  <Icon icon="mingcute:copy-fill" width="16" height="16" />
-                </button>
-                <button onClick={() => deleteProjcct(project.id)} className="p-1.5 rounded-md hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 transform hover:-translate-y-0.5">
+                <button onClick={(e) =>{
+                  e.stopPropagation()
+                  deleteProjcct(project.id)}} className="p-1.5 rounded-md hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 transform hover:-translate-y-0.5">
               <Icon icon="mingcute:delete-fill" width="16" height="16" />
                 </button>
               </div>

@@ -9,9 +9,12 @@ import { cn } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
+import { Share } from "../pages/Editor";
+
 export const EditorNav = ({
   navItems,
-  className
+  className,
+  shareFunction
 }) => {
   const { scrollY } = useScroll();
   const nav = useNavigate();
@@ -54,6 +57,12 @@ export const EditorNav = ({
           <Link
           key={`link=${idx}`}
             to={navItem.link}
+            onClick={(e) => {
+              if (navItem.name === "Share") {
+                e.preventDefault();
+                shareFunction();
+              }
+            }}
             className={cn(
               "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"
             )}>

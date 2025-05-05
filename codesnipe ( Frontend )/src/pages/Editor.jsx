@@ -9,6 +9,7 @@ import html2canvas from 'html2canvas'
 
 const EditorPage = () => {
   const { projectid } = useParams();
+    console.log(projectid);
   
   const [htmlCode, setHtmlCode] = useState('');
   const [cssCode, setCssCode] = useState('');
@@ -408,3 +409,15 @@ const EditorPage = () => {
 }
 
 export default EditorPage
+
+
+export const Share = (projectid) => { 
+  const handleShare = () => {
+    const shareLink = `${window.location.origin}/editor/${projectid}`;
+    navigator.clipboard.writeText(shareLink).then(() => {
+      toast.success('Link copied to clipboard');
+    });
+  };
+
+  return handleShare;
+}
