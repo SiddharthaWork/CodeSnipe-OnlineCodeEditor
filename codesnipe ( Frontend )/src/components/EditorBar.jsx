@@ -9,17 +9,24 @@ import { cn } from "../lib/utils";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Share } from "../pages/Editor";
-
+import toast from "react-hot-toast";
 export const EditorNav = ({
   navItems,
   className,
-  shareFunction
 }) => {
   const { scrollY } = useScroll();
   const nav = useNavigate();
   const [visible, setVisible] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);
+
+    const handleShare = () => {
+      const currentUrl = window.location.href;
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        toast.success('Link copied to clipboard');
+      }).catch(() => {
+        toast.error('Failed to copy link');
+      });
+    };
 
   useMotionValueEvent(scrollY, "change", (current) => {
     if (typeof current === "number") {
@@ -70,6 +77,9 @@ export const EditorNav = ({
             <span className="hidden sm:block text-sm">{navItem.name}</span>
           </Link>
         ))}
+        <button onClick={handleShare} className="relative cursor-pointer dark:text-neutral-50 items-center text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500 text-sm">
+        Share
+        </button>
         <button
       onClick={() => nav("/editor/100")}
           className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full flex items-center space-x-2">
