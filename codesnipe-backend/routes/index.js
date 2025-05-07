@@ -118,27 +118,42 @@ router.delete("/deleteProject/:projectId", async (req, res) => {
 });
 
 
-router.get("/getProject", async (req, res) => {
-  let { userId, projectId } = req.query;
-  let project = await projectModel.findOne({ _id: projectId });
-  if (project) {
-    return res.json({ success: true, message: "Project Found", project: project })
-  }
-  else {
-    return res.json({ success: false, message: "Project Not Found" })
-  }
-})
+// router.get("/getProject", async (req, res) => {
+//   let { userId, projectId } = req.query;
+//   let project = await projectModel.findOne({ _id: projectId });
+//   if (project) {
+//     return res.json({ success: true, message: "Project Found", project: project })
+//   }
+//   else {
+//     return res.json({ success: false, message: "Project Not Found" })
+//   }
+// })
 
 router.post("/getOneProject", async (req, res) => {
-  let { userId, projectId } = req.body;
-  let project = await projectModel.findOne({ _id: projectId});
-  if (project) {
-    return res.json({ success: true, message: "Project Found", project: project })
+  try {
+    const { projectId } = req.body;
+
+    // Validate projectId
+    if (!projectId) {
+      return res.status(400).json({ success: false, message: "Project ID is required" });
+    }
+
+    // Optionally, check if projectId is a valid ObjectId
+    if (!projectId.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ success: false, message: "Invalid Project ID format" });
+    }
+
+    const project = await projectModel.findOne({ _id: projectId });
+    if (project) {
+      return res.json({ success: true, message: "Project Found", project: project });
+    } else {
+      return res.status(404).json({ success: false, message: "Project Not Found" });
+    }
+  } catch (err) {
+    console.error("Error fetching project:", err);
+    return res.status(500).json({ success: false, message: "Server Error", error: err.message });
   }
-  else {
-    return res.json({ success: false, message: "Project Not Found" })
-  }
-})
+});
 
 router.post("/updateProject", async (req, res) => {
   const { projectId, userId, htmlcode, csscode, jscode } = req.body;
