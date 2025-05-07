@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect('mongodb://127.0.0.1:27017/codesnipe');
+mongoose.connect('mongodb+srv://siddhartha:lnstc000@codesnipe.afdb0lv.mongodb.net/?retryWrites=true&w=majority&appName=Codesnipe');
 
 const projectSchema = new mongoose.Schema({
     title: String,
