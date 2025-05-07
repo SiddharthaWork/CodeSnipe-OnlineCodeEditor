@@ -18,6 +18,7 @@ const EditorPage = () => {
   const [title,setTitle] = useState('');
   const iframeRef = useRef(null);
   
+
   const saveScreenshot = async () => {
     try {
       // Get the iframe element
@@ -205,18 +206,44 @@ const EditorPage = () => {
     setter(value);
   };
 
+  // Function to update iframe content without reloading
+  const updateIframeContent = () => {
+    if (!iframeRef.current) return;
+    
+    const iframe = iframeRef.current;
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+    
+    // Create a new document structure
+    const htmlContent = `
+      <html>
+        <head>
+          <style>${cssCode}</style>
+        </head>
+        <body>${htmlCode}</body>
+        <script>${jsCode}</script>
+      </html>
+    `;
+
+    // Write the content directly to the document
+    iframeDoc.open();
+    iframeDoc.write(htmlContent);
+    iframeDoc.close();
+  };
+
   // Update iframe when code changes
   useEffect(() => {
-    if (dataFetched && iframeRef.current) {
-      const srcDoc = generateSrcDoc();
-      iframeRef.current.srcdoc = srcDoc;
+    if (dataFetched) {
+      updateIframeContent();
     }
   }, [htmlCode, cssCode, jsCode, dataFetched]);
 
-  // Set iframe reference
+  // Set iframe reference and initial content
   useEffect(() => {
     iframeRef.current = document.getElementById("iframe");
-  }, []);
+    if (dataFetched) {
+      updateIframeContent();
+    }
+  }, [dataFetched]);
 
   const getCode = async () => {
     setLoading(true);
@@ -387,16 +414,9 @@ const EditorPage = () => {
               className='w-full h-full bg-white'
               title="Preview"
               sandbox="allow-scripts allow-same-origin"
-              srcDoc={generateSrcDoc()}
               onLoad={() => {
-                if (iframeRef.current) {
-                  try {
-                    // Try to access the iframe content for testing purposes
-                    const doc = iframeRef.current.contentDocument || iframeRef.current.contentWindow.document;
-                    console.log('Iframe loaded and accessible');
-                  } catch (error) {
-                    console.error('Cannot access iframe content:', error);
-                  }
+                if (iframeRef.current && dataFetched) {
+                  updateIframeContent();
                 }
               }}
             />
