@@ -4,7 +4,7 @@ import { FloatingNav } from '../components/Topbar';
 const TopNavbar = () => {
     const navItems = [
         { name: "Explore", link: "/", icon: <Icon icon="mdi:home" width="20" /> },
-        { name: "Projects", link: "/editor/100", icon: <Icon icon="mdi:cog" width="20" /> },
+        { name: "Projects", link: "/code", icon: <Icon icon="mdi:cog" width="20" /> },
       ];
     
   return (
