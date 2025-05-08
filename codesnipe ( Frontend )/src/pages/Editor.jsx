@@ -71,13 +71,13 @@ const EditorPage = () => {
         formData.append('title', title);
 
         try {
-          console.log('Uploading screenshot to:', 'http://localhost:3000/image/upload');
+          console.log('Uploading screenshot to:', `${API_BASE_URL}image/upload`);
           console.log('Form data fields:', 
             Array.from(formData.entries()).map(entry => entry[0])
           );
           
           // First check if an image already exists for this project
-          const checkResponse = await fetch(`http://localhost:3000/image/check/${projectid}`, {
+          const checkResponse = await fetch(`${API_BASE_URL}image/check/${projectid}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json'
@@ -85,12 +85,12 @@ const EditorPage = () => {
           });
           
           const checkResult = await checkResponse.json();
-          let endpoint = 'http://localhost:3000/image/upload';
+          let endpoint = `${API_BASE_URL}image/upload`;
           let method = 'POST';
           
           // If image exists, use update endpoint instead
           if (checkResponse.ok && checkResult.exists && checkResult.imageId) {
-            endpoint = `http://localhost:3000/image/update/${checkResult.imageId}`;
+            endpoint = `${API_BASE_URL}image/update/${checkResult.imageId}`;
             method = 'PUT';
             console.log('Updating existing image with ID:', checkResult.imageId);
           } else {
