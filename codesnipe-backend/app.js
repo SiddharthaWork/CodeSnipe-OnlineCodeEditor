@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 
 // CORS Configuration
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://code-snipe-beta.vercel.app/'],
+  origin: ['http://localhost:5173', 'https://code-snipe-beta.vercel.app', 'https://code-snipe-api.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
