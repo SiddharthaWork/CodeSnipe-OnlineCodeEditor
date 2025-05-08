@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import { Icon } from "@iconify/react"
 import { API_BASE_URL } from "../../helper"
 import { useNavigate } from "react-router-dom"
-import { div } from "motion/react-client"
 
 const GridCard = () => {
   // State to track which card is being hovered (for additional effects)
@@ -67,7 +66,7 @@ const GridCard = () => {
                   <div className="w-full h-[70%] relative">
                     <img
                       // src={item.image || "/placeholder.svg"} 
-                      src={`http://localhost:3000/image/${item._id}`}
+                      src={`${API_BASE_URL}image/${item._id}`}
                       alt={item.name}
                       className="object-cover w-full h-full"
                     />
