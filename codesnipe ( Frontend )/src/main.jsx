@@ -5,11 +5,14 @@ import App from './App.jsx'
 import { AuthProvider } from './context/AuthContext.jsx'
 import { Toaster } from 'react-hot-toast'
 import { ProjectProvider } from './context/ProjectContext.jsx'
+import { EditorProvider } from './context/EditorContext';
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
       <ProjectProvider>
+    <EditorProvider>
     <head>
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
@@ -19,6 +22,7 @@ createRoot(document.getElementById('root')).render(
       <Toaster position='top-center' containerStyle={{ marginTop: '5rem'}}/>
       <App />
     </body>
+    </EditorProvider>
     </ProjectProvider>
     </AuthProvider>
   </StrictMode>,

@@ -10,6 +10,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import toast from "react-hot-toast";
+import { useEditor } from "../context/EditorContext";
+
 export const EditorNav = ({
   navItems,
   className,
@@ -18,6 +20,7 @@ export const EditorNav = ({
   const nav = useNavigate();
   const [visible, setVisible] = useState(true);
   const [lastScroll, setLastScroll] = useState(0);
+  const { saveScreenshot } = useEditor();
 
     const handleShare = () => {
       const currentUrl = window.location.href;
@@ -81,7 +84,7 @@ export const EditorNav = ({
         Share
         </button>
         <button
-      onClick={() => nav("/editor/100")}
+          onClick={saveScreenshot}
           className="border text-sm font-medium relative border-neutral-200 dark:border-white/[0.2] text-black dark:text-white px-4 py-2 rounded-full flex items-center space-x-2">
           <span>Save</span>
           <Icon icon="uil:save" width="20" /> 

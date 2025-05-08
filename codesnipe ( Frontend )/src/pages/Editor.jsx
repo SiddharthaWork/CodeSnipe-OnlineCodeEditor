@@ -6,9 +6,11 @@ import { API_BASE_URL } from '../../helper'
 import { useParams } from 'react-router-dom'
 import toast from 'react-hot-toast'
 import html2canvas from 'html2canvas'
+import { useEditor } from '../context/EditorContext'
 
 const EditorPage = () => {
   const { projectid } = useParams();
+  const { registerEditorFunctions } = useEditor();
   
   const [htmlCode, setHtmlCode] = useState('');
   const [cssCode, setCssCode] = useState('');
@@ -298,6 +300,14 @@ const EditorPage = () => {
       </div>
     </div>
   );
+
+  // Register editor functions when component mounts
+  useEffect(() => {
+    registerEditorFunctions({
+      saveScreenshot,
+      updateCode
+    });
+  }, []); // Empty dependency array since these functions don't change
 
   return (
     <div className='w-full h-[90vh] bg-white/5 flex flex-col overflow-hidden'>
