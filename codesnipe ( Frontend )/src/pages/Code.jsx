@@ -122,7 +122,7 @@ export default function CreateProject() {
         </div>
 
         {/* Templates Section */}
-        <div className="space-y-4">
+        {/* <div className="space-y-4">
           <h2 className="text-xl font-semibold">Templates</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {templates.map((template) => (
@@ -154,7 +154,7 @@ export default function CreateProject() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
 
         {/* Recent Projects Section */}
         {/* <div className="space-y-4">
@@ -178,7 +178,7 @@ export default function CreateProject() {
             ))}
           </div>
         </div> */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div className="flex flex-wrap items-center justify-between gap-4 mb-6 pt-6">
           <div>
             <h1 className="text-2xl font-semibold text-white">Your Projects</h1>
           </div>

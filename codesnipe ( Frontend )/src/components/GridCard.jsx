@@ -66,7 +66,7 @@ const GridCard = () => {
                   <div className="w-full h-[70%] relative">
                     <img
                       // src={item.image || "/placeholder.svg"} 
-                      src={`${API_BASE_URL}image/${item.image}`}
+                      src={`${API_BASE_URL}image/${item._id}`}
                       alt={item.name}
                       className="object-cover w-full h-full"
                     />
