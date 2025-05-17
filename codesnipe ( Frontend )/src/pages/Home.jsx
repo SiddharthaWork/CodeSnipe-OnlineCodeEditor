@@ -46,7 +46,7 @@ const Home = () => {
         </div>
 
       <div className='w-full h-full flex flex-col gap-6 p-12 mx-auto'>
-            <h1 className='text-2xl font-bold ml-10'>Picked By <span className='text-sky-600'>CodeSnipe</span></h1>
+            <h1 className='text-2xl font-bold ml-10 xl:text-left text-center'>Picked By <span className='text-sky-600'>CodeSnipe</span></h1>
               <GridCard />
       </div>
     </div>
