@@ -42,7 +42,7 @@ const EditorPage = () => {
       }
 
       // Wait for any animations or rendering to complete
-      await new Promise(resolve => setTimeout(resolve, 300));
+      // await new Promise(resolve => setTimeout(resolve, 300));
 
       // Use html2canvas with proper settings
       const screenshotCanvas = await html2canvas(iframeDoc.body, {
@@ -165,7 +165,6 @@ const EditorPage = () => {
         console.log(data.message);
         
         // After saving the code, capture and save screenshot
-        await saveScreenshot();
       }
       else{
         toast.error(data.message);
@@ -179,10 +178,11 @@ const EditorPage = () => {
   }
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
+    const handleKeyDown = async(event) => {
       if(event.ctrlKey && event.key === 's'){
         event.preventDefault();
         updateCode();
+        await saveScreenshot();
       }
     }
     window.addEventListener('keydown', handleKeyDown);
@@ -192,18 +192,6 @@ const EditorPage = () => {
     }
   }, [htmlCode, cssCode, jsCode]); // Added dependencies to prevent stale closure
 
-  const generateSrcDoc = () => {
-    return `
-      <html>
-        <head>
-          <style>${cssCode}</style>
-        </head>
-        <body>${htmlCode}</body>
-        <script>${jsCode}</script>
-      </html>
-    `;
-  };
-  
   const handleCodeChange = (setter) => (value) => {
     setter(value);
   };
