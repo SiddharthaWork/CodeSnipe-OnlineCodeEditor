@@ -131,7 +131,9 @@ export default function ListCard() {
               </div>
               <button
                 className={`text-gray-400 hover:text-sky-400 transition-colors ${project.favorite ? "text-sky-400" : ""}`}
-                onClick={() => toggleFavorite(project.id)}
+                onClick={(s) => {
+                  s.stopPropagation();
+                  toggleFavorite(project.id)}}
               >
                 <Icon
                   icon={project.favorite ? "mingcute:star-fill" : "mingcute:star-line"}
@@ -145,15 +147,15 @@ export default function ListCard() {
             <div className="flex justify-between items-center pl-7">
               <span className="text-xs text-gray-500 flex items-center gap-1">
                 <Icon icon="mingcute:time-line" width="14" height="14" />
-                {new Date(project.updatedAt).toDateString()}
+                {new Date(project.lastEdited).toDateString()}
               </span>
-              <div className="flex gap-2">
-                <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
+              <div className="flex gap-2" onClick={(s) => s.stopPropagation()}>
+                <button onClick={() => navigate(`/editor/${project.id}`)} className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
                   <Icon icon="mingcute:edit-line" width="16" height="16" />
                 </button>
-                <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
+                {/* <button className="p-1.5 rounded-md hover:bg-sky-600/10 hover:text-sky-400 transition-all duration-200 transform hover:-translate-y-0.5">
                   <Icon icon="mingcute:copy-fill" width="16" height="16" />
-                </button>
+                </button> */}
                 <button onClick={() => deleteProject(project.id)} className="p-1.5 rounded-md hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 transform hover:-translate-y-0.5">
                   <Icon icon="mingcute:delete-fill" width="16" height="16" />
                 </button>

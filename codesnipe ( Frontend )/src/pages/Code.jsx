@@ -37,37 +37,36 @@ export default function CreateProject() {
     navigate(`/editor/${projectId}`);
   }
 
-  const templates = [
-    {
-      id: 1,
-      name: "Html, CSS, JavaScript",
-      icon: <Icon icon="logos:react" width="24" height="24" />,
-      description: "Create a new Html, CSS, JavaScript App",
-      stars: 4.8,
-    },
-    {
-      id: 2,
-      name: "JavaScript",
-      icon: <Icon icon="logos:nextjs-icon" width="24" height="24" />,
-      description: "Start with a JavaScript template",
-      stars: 4.9,
-    },
-    {
-      id: 3,
-      name: "Java",
-      icon: <Icon icon="logos:nodejs-icon" width="24" height="24" />,
-      description: "Start with Java",
-      stars: 4.7,
-    },
-    {
-      id: 4,
-      name: "Python",
-      icon: <Icon icon="mdi:git" width="24" height="24" color="#F05032" />,
-      description: "Create a app with Python",
-      stars: 4.5,
-    },
-  ]
-
+  // const templates = [
+  //   {
+  //     id: 1,
+  //     name: "Html, CSS, JavaScript",
+  //     icon: <Icon icon="logos:react" width="24" height="24" />,
+  //     description: "Create a new Html, CSS, JavaScript App",
+  //     stars: 4.8,
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "JavaScript",
+  //     icon: <Icon icon="logos:nextjs-icon" width="24" height="24" />,
+  //     description: "Start with a JavaScript template",
+  //     stars: 4.9,
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Java",
+  //     icon: <Icon icon="logos:nodejs-icon" width="24" height="24" />,
+  //     description: "Start with Java",
+  //     stars: 4.7,
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Python",
+  //     icon: <Icon icon="mdi:git" width="24" height="24" color="#F05032" />,
+  //     description: "Create a app with Python",
+  //     stars: 4.5,
+  //   },
+  // ]
 
   const getImage = async () => {
     setloading(true);
@@ -104,7 +103,7 @@ export default function CreateProject() {
   }, [image, userId]);
 
   return (
-    <div className="w-full min-h-screen bg-black text-white ">
+    <div className="w-full min-h-screen bg-black text-white md:mt-0 mt-10 ">
       {show && (
         <Modal setShow={setShow}>
           <CreateModel />

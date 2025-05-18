@@ -45,7 +45,7 @@ const CreateModel = () => {
   }
     
   return (
-    <form onSubmit={createProject} className='w-[25rem] h-fit border-gray-800 border-2 bg-[#0d1631] rounded-lg p-6 flex flex-col gap-4 justify-start'>
+    <form onSubmit={createProject} className='md:w-[25rem] w-full h-fit border-gray-800 border-2 bg-[#0d1631] rounded-lg p-6 flex flex-col gap-4 justify-start'>
         <h1 className='text-xl flex gap-x-2 items-center'>
             Project Title
           <Icon icon="tdesign:code" className="w-6 h-6" />
@@ -59,7 +59,7 @@ const CreateModel = () => {
         />
 
         <div className='text-center'>
-          <ShinyButton className='w-fit min-w-[20rem] h-fit mt-2 '>
+          <ShinyButton className='w-fit min-w-[14rem] md:min-w-[20rem] h-fit mt-2 '>
               Create
           </ShinyButton>
         </div>
