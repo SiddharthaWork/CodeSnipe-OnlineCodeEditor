@@ -96,7 +96,7 @@ const SignUp = () => {
               tabIndex="-1" // Make div focusable but not in tab order
             >
               <div className="mb-6">
-                <h1 className="text-center text-2xl font-bold text-white">Sign In</h1>
+                <h1 className="text-center text-2xl font-bold text-white">Sign Up</h1>
               </div>
               <div>
                 {error && (
@@ -173,7 +173,7 @@ const SignUp = () => {
                 <div className="flex items-center gap-2">
                   <p className="text-sm text-gray-400">Create an account</p>
                   <Link to="/login" className="text-sky-400 hover:underline">
-                    SignIn
+                    SignUp
                   </Link>
                 </div>
               </div>
