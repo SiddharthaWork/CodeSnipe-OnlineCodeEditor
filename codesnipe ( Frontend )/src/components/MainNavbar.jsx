@@ -61,7 +61,7 @@ const MainNavbar = () => {
   return (
     <div className='w-full h-[5rem] flex justify-between items-center px-2 z-0'>
       <div className='w-full h-full overflow-hidden relative'>
-      <div className='absolute -top-10 cursor-pointer' onClick={() => nav("/")}>
+      <div className='absolute -top-10 cursor-pointer md:mt-0 mt-2' onClick={() => nav("/")}>
         <img src="/codesnipe.gif" alt="CodeSnipe Logo" className='w-[10rem] h-full object-contain' />
       </div>
       </div>
