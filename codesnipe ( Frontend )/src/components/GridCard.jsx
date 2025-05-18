@@ -38,21 +38,21 @@ const GridCard = () => {
     <>
       {
         loading ? (
-          <div className="grid md:grid-cols-2 xl:grid-cols-3 grid-cols-1 w-full gap-8 md:gap-10 xl:gap-12 px-[2.5%]">
+          <div className="grid grid-cols-1 sm:grid-cols-1 place-items-center lg:grid-cols-2 2xl:grid-cols-3 w-full gap-4 sm:gap-8 md:gap-10 xl:gap-12 px-2 sm:px-[2.5%]">
           {Array(3).fill(0).map((_, index) => (
-            <div key={index} className="relative w-[30rem] aspect-video animate-pulse">
+            <div key={index} className="relative w-full max-w-[95vw] sm:w-[30rem] aspect-video animate-pulse">
               <div className="absolute inset-0 bg-gray-800 rounded-xl"></div>
             </div>
           ))
 }            </div>
         ) : (
 
-          <div className="grid place-items-center lg:grid-cols-2 2xl:grid-cols-3 grid-cols-1 w-full gap-8 md:gap-10 xl:gap-12 px-[2.5%]">
+          <div className="grid place-items-center grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 w-full gap-8 sm:gap-8 md:gap-10 xl:gap-12 px-2 sm:px-[2.5%]">
             {/* Project Cards */}
             {images.map((item, index) => (
               <div
                 key={item._id}
-                className="relative w-[30rem] aspect-video group cursor-pointer"
+                className="relative w-full  sm:w-[30rem] aspect-video group cursor-pointer"
                 onMouseEnter={() => setHoveredCard(item._id)}
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => navigate(`/editor/${item.projectId}`)}
@@ -63,7 +63,7 @@ const GridCard = () => {
             group-hover:translate-x-2 group-hover:-translate-y-2"
                 >
                   {/* Card Image */}
-                  <div className="w-full h-[70%] relative">
+                  <div className="w-full h-[60vw] sm:h-[70%] relative max-h-[70%] min-h-[120px]">
                     <img
                       // src={item.image || "/placeholder.svg"} 
                       src={`${API_BASE_URL}image/${item._id}`}
@@ -73,7 +73,7 @@ const GridCard = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-[#050a1f] to-transparent opacity-50"></div>
 
                     {/* Floating action buttons that appear on hover */}
-                    <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="absolute top-2 right-2 sm:top-3 sm:right-3 flex gap-1 sm:gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <button className="w-8 h-8 rounded-full bg-slate-900/80 backdrop-blur-sm flex items-center justify-center text-white hover:bg-sky-600 transition-colors">
                         <Icon icon="mingcute:heart-line" width="16" height="16" />
                       </button>
@@ -84,9 +84,9 @@ const GridCard = () => {
                   </div>
 
                   {/* Card Content */}
-                  <div className="w-full h-[30%] p-4 flex justify-between items-center">
-                    <div className="flex gap-3 items-center">
-                      <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-slate-700 flex-shrink-0">
+                  <div className="w-full h-[30%] p-2 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-0">
+                    <div className="flex gap-2 sm:gap-3 items-center">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border-2 border-slate-700 flex-shrink-0">
                         <img
                           src={item.userprofile || "https://i.pinimg.com/474x/59/77/92/597792dff8c2fe8729218359fa15b16c.jpg"}
                           alt="User profile"
@@ -94,12 +94,12 @@ const GridCard = () => {
                         />
                       </div>
                       <div className="flex flex-col">
-                        <h3 className="text-white font-medium leading-tight">{item.title || "Untitled Project"}</h3>
-                        <p className="text-gray-400 text-sm">{item.des || "UI Practice"}</p>
+                        <h3 className="text-white text-base sm:text-lg font-medium leading-tight">{item.title || "Untitled Project"}</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm">{item.des || "UI Practice"}</p>
                       </div>
                     </div>
 
-                    <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center hover:bg-sky-600 transition-colors">
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-700 flex items-center justify-center hover:bg-sky-600 transition-colors mt-2 sm:mt-0">
                       <Icon icon="mingcute:code-line" width="18" height="18" className="text-white" />
                     </div>
                   </div>

@@ -14,10 +14,10 @@ const Home = () => {
     <div className='w-full h-full'>
 {/* here are some changes that need to be made */}
         
-        <div className="container mx-auto px-4 py-8 mt-8">
+        <div className="container mx-auto px-4 py-8 mt-8 space-y-8 lg:space-y-4">
           <Search/>
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-              <h2 className="text-2xl font-semibold text-white">Your Projects</h2>
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 md:mx-0 mx-4">
+              <h2 className="text-2xl font-semibold text-white ">Your Projects</h2>
 
               {/* View Toggle */}
               <div className="flex items-center bg-[#0d1631] rounded-lg p-1 border border-sky-900/30">
@@ -39,13 +39,13 @@ const Home = () => {
             </div>
 
             {/* Project Cards */}
-            <div className="w-full">
+            <div className="w-full md:px-0 px-4">
               {layout === "gridview" && <GridBox/>}
               {layout === "listview" && <ListCard />}
             </div>
         </div>
 
-      <div className='w-full h-full flex flex-col gap-6 p-12 mx-auto'>
+      <div className='w-full h-full flex flex-col gap-6 md:p-12 p-6 mx-auto'>
             <h1 className='text-2xl font-bold ml-10 xl:text-left text-center'>Picked By <span className='text-sky-600'>CodeSnipe</span></h1>
               <GridCard />
       </div>

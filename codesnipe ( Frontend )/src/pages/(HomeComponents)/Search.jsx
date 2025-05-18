@@ -88,7 +88,7 @@ const Search = () => {
 
     return (
         <div className='flex flex-col justify-center items-center gap-6 relative'>
-            <h1 className='font-kanit text-4xl md:text-5xl font-bold text-white'>✨{randomTitle} <span className='text-sky-400'>{randomWord}</span></h1>
+            <h1 className='font-kanit text-4xl md:text-5xl font-bold text-white text-center'>✨{randomTitle} <span className='text-sky-400'>{randomWord}</span></h1>
 
             <div className="relative w-full max-w-2xl">
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
