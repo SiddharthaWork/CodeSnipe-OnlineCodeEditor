@@ -47,12 +47,12 @@ const GridCard = () => {
 }            </div>
         ) : (
 
-          <div className="grid place-items-center grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 w-full gap-8 sm:gap-8 md:gap-10 xl:gap-12 px-2 sm:px-[2.5%]">
+          <div className="grid place-items-center max-w-[100rem] mx-auto grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 w-full gap-8 sm:gap-8 md:gap-10 xl:gap-12 px-2 sm:px-[1.5%]">
             {/* Project Cards */}
             {images.map((item, index) => (
               <div
                 key={item._id}
-                className="relative w-full  sm:w-[30rem] aspect-video group cursor-pointer"
+                className="relative w-full  sm:w-[29rem] aspect-video group cursor-pointer"
                 onMouseEnter={() => setHoveredCard(item._id)}
                 onMouseLeave={() => setHoveredCard(null)}
                 onClick={() => navigate(`/editor/${item.projectId}`)}

@@ -39,14 +39,14 @@ const Home = () => {
             </div>
 
             {/* Project Cards */}
-            <div className="w-full md:px-0 px-4">
+            <div className="w-full md:px-0 px-4 ">
               {layout === "gridview" && <GridBox/>}
               {layout === "listview" && <ListCard />}
             </div>
         </div>
 
-      <div className='w-full h-full flex flex-col gap-6 md:p-12 p-6 mx-auto'>
-            <h1 className='text-2xl font-bold md:ml-10 xl:text-left text-center'>Picked By <span className='text-sky-400'>CodeSnipe</span></h1>
+      <div className='w-full h-full flex flex-col gap-6 md:py-12 p-6 mx-auto max-w-[100rem] '>
+            <h1 className='text-2xl font-bold md:ml-6 xl:text-left text-center'>Picked By <span className='text-sky-400'>CodeSnipe</span></h1>
               <GridCard />
       </div>
     </div>
