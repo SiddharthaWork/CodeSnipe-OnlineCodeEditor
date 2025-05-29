@@ -273,21 +273,19 @@ export const ImageCard = ({ images, loading }) => {
         ))
 }            </div>
       ) : (
-
-        <div className="grid place-items-center grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 w-full gap-8 sm:gap-8 md:gap-14 xl:gap-20 xl:space-x-20 mx-auto px-2 sm:px-[2.5%]">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 w-full gap-8 sm:px-4">
           {/* Project Cards */}
           {images.map((item, index) => (
             <div
               key={item._id}
-              className="relative w-full  sm:w-[30rem] aspect-video group cursor-pointer"
+              className="relative w-full max-w-md aspect-video group cursor-pointer"
               onMouseEnter={() => setHoveredCard(item._id)}
               onMouseLeave={() => setHoveredCard(null)}
               onClick={() => navigate(`/editor/${item.projectId}`)}
             >
               {/* Main Card */}
               <div
-                className="absolute inset-0 bg-[#050a1f] w-full md:w-[28rem] rounded-xl overflow-hidden shadow-lg z-10 transition-all duration-300 ease-out
-          group-hover:translate-x-2 group-hover:-translate-y-2"
+                className="absolute inset-0 bg-[#050a1f] w-full rounded-xl overflow-hidden shadow-lg z-10 transition-all duration-300 ease-out group-hover:translate-x-2 group-hover:-translate-y-2"
               >
                 {/* Card Image */}
                 <div className="w-full h-full sm:h-[70%] relative max-h-[20%] md:max-h-[70%] min-h-[120px]">
