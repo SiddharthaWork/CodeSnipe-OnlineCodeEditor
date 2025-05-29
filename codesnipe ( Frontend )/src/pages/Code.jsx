@@ -265,16 +265,16 @@ export const ImageCard = ({ images, loading }) => {
     <>
      {
       loading ? (
-        <div className="grid grid-cols-1 sm:grid-cols-1 place-items-center lg:grid-cols-2 2xl:grid-cols-3 w-full gap-4 sm:gap-8 md:gap-10 xl:gap-12 px-2 sm:px-[2.5%]">
+        <div className="grid grid-cols-1 sm:grid-cols-1 place-items-center lg:grid-cols-2 2xl:grid-cols-3 w-full gap-4 sm:gap-8 md:gap-10 xl:gap-28 px-2 sm:px-[2.5%]">
         {Array(3).fill(0).map((_, index) => (
-          <div key={index} className="relative w-full max-w-[95vw] sm:w-[30rem] aspect-video animate-pulse">
+          <div key={index} className="relative w-full max-w-[95vw] sm:w-[28rem] aspect-video animate-pulse">
             <div className="absolute inset-0 bg-gray-800 rounded-xl"></div>
           </div>
         ))
 }            </div>
       ) : (
 
-        <div className="grid place-items-center grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 w-full gap-8 sm:gap-8 md:gap-10 xl:gap-12 px-2 sm:px-[2.5%]">
+        <div className="grid place-items-center grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 w-full gap-8 sm:gap-8 md:gap-14 xl:gap-20 xl:space-x-20 mx-auto px-2 sm:px-[2.5%]">
           {/* Project Cards */}
           {images.map((item, index) => (
             <div
@@ -286,11 +286,11 @@ export const ImageCard = ({ images, loading }) => {
             >
               {/* Main Card */}
               <div
-                className="absolute inset-0 bg-[#050a1f] rounded-xl overflow-hidden shadow-lg z-10 transition-all duration-300 ease-out
+                className="absolute inset-0 bg-[#050a1f] w-full md:w-[28rem] rounded-xl overflow-hidden shadow-lg z-10 transition-all duration-300 ease-out
           group-hover:translate-x-2 group-hover:-translate-y-2"
               >
                 {/* Card Image */}
-                <div className="w-full h-[60vw] sm:h-[70%] relative max-h-[70%] min-h-[120px]">
+                <div className="w-full h-full sm:h-[70%] relative max-h-[20%] md:max-h-[70%] min-h-[120px]">
                   <img
                     // src={item.image || "/placeholder.svg"} 
                     src={`${API_BASE_URL}image/${item._id}`}
@@ -334,7 +334,7 @@ export const ImageCard = ({ images, loading }) => {
 
               {/* Background Card - creates the offset shadow effect */}
               <div
-                className={`absolute inset-0 bg-sky-600 rounded-xl -z-0 transition-all duration-500 ease-out
+                className={`absolute inset-0 bg-sky-600 rounded-xl -z-0 transition-all duration-500 ease-out w-full md:w-[28rem]
           ${hoveredCard === item.id ? "shadow-lg shadow-sky-600/20" : ""}`}
               ></div>
             </div>
