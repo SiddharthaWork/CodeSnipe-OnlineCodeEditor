@@ -16,13 +16,21 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // CORS Configuration
+// const corsOptions = {
+//   origin: ['http://localhost:5173', 'https://code-snipe-beta.vercel.app/',  'https://code-snipe-beta.vercel.app', 'https://code-snipe-api.vercel.app'],
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+//   credentials: true,
+//   optionsSuccessStatus: 200
+// };
+
 const corsOptions = {
-  origin: ['http://localhost:5173', 'https://code-snipe-beta.vercel.app', 'https://code-snipe-api.vercel.app'],
+  origin: '*', 
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
+
 
 app.use(cors(corsOptions));
 app.use(logger('dev'));
