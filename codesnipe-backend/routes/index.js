@@ -193,15 +193,35 @@ router.get("/getAllProjects", async (req, res) => {
 })
 
 router.put("/updateProject", async (req, res) => {
-  let { projectId, title, htmlcode, csscode, jscode, others } = req.body;
-  let project = await projectModel.findOneAndUpdate({ _id: projectId }, { title: title }, { htmlCode: htmlcode }, { cssCode: csscode }, { jsCode: jscode }, { others: others });
-  if (project) {
-    return res.json({ success: true, message: "Project Updated Successfully" })
+  const { projectId, title, htmlcode, csscode, jscode, others } = req.body;
+
+  if (!projectId) {
+    return res.status(400).json({ success: false, message: "Project ID is required" });
   }
-  else {
-    return res.json({ success: false, message: "Project Not Found" })
+
+  try {
+    const update = {};
+    if (title !== undefined) update.title = title;
+    if (htmlcode !== undefined) update.htmlCode = htmlcode;
+    if (csscode !== undefined) update.cssCode = csscode;
+    if (jscode !== undefined) update.jsCode = jscode;
+    if (others !== undefined) update.others = others;
+
+    const project = await projectModel.findOneAndUpdate(
+      { _id: projectId },
+      update,
+      { new: true }
+    );
+
+    if (project) {
+      return res.json({ success: true, message: "Project Updated Successfully", project: project });
+    } else {
+      return res.json({ success: false, message: "Project Not Found" });
+    }
+  } catch (error) {
+    return res.status(500).json({ success: false, message: "Server Error", error: error.message });
   }
-})
+});
 
 
 
