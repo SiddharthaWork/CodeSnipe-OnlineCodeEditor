@@ -1,6 +1,7 @@
+require('dotenv').config();
 const mongoose = require("mongoose");
 
-mongoose.connect('mongodb+srv://siddharthashrestha2345_db_user:B6X1HulcHxSVA9Nf@cluster0.igvr0hu.mongodb.net/');
+mongoose.connect(process.env.mongodbUrl);
 
 const projectSchema = new mongoose.Schema({
     title: String,
