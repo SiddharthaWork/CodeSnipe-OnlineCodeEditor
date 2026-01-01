@@ -1,6 +1,6 @@
 let mongoose = require("mongoose");
 
-mongoose.connect('mongodb+srv://siddhartha:lnstc000@codesnipe.afdb0lv.mongodb.net/?retryWrites=true&w=majority&appName=Codesnipe');
+mongoose.connect('mongodb+srv://siddharthashrestha2345_db_user:B6X1HulcHxSVA9Nf@cluster0.igvr0hu.mongodb.net/');
 
 
 let userSchema = new mongoose.Schema({

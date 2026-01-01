@@ -11,6 +11,10 @@ var cors = require('cors');
 
 var app = express();
 
+// Running in this port
+app.set('port', process.env.PORT || 5000);
+console.log(`Server is running on port ${app.get('port')}`);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
